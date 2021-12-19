@@ -46,6 +46,10 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
         mainPanel.add(taskOrClassPane, BorderLayout.CENTER);
 
         initializeNavigationBar();
+        newTaskButton.setForeground(new Color(0, 153, 0));
+        newTaskButton.setBackground(new Color(0, 153, 0));
+        newClassPlanButton.setForeground(new Color(0, 153, 0));
+        newClassPlanButton.setBackground(new Color(0, 153, 0));
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(mainPanel);

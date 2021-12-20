@@ -3,13 +3,15 @@ package project_management;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Nico Sonner on 11.12.2021.
  */
-public class ProjectTask extends Task {
+public class ProjectTask extends Task implements ActionListener {
     private List<SubTask> subTasks = new ArrayList<>();
     private JButton newSubTaskButton = new JButton("Add New Sub-Task",
                                       ResourceLoader.createImageIcon(getClass(),
@@ -25,21 +27,23 @@ public class ProjectTask extends Task {
         // color "Add new Sub-Task"-button
         newSubTaskButton.setBackground(new Color(0, 0, 153));
         newSubTaskButton.setForeground(new Color(0, 0, 153));
-
-        //newSubTaskButton.setContentAreaFilled(false);
-
-        //newSubTaskButton.setOpaque(true);
-        //newSubTaskButton.setBorderPainted(true);
-        //newSubTaskButton.setBorder(new LineBorder(Color.RED));
-
-        //taskContentPanel.add(new JLabel("DESCRIPTION:"));
-        /*taskContentPanel.add(new JLabel("Sub-Task 1"));
-        taskContentPanel.add(new JLabel("Sub-Task 2"));
-        taskContentPanel.add(new JLabel("Sub-Task 3"));*/
     }
 
+    /**
+     * Adds a new sub-task to this project task.
+     * @param subTaskName the name of the new sub-task
+     */
     public void addNewSubTask(String subTaskName) {
-        subTasks.add(new SubTask(subTaskName, this));
+        SubTask newSubTask = new SubTask(subTaskName, this);
+        subTasks.add(newSubTask);
     }
 
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == newSubTaskButton) {
+            // user adds a new sub-task
+
+        }
+    }
 }

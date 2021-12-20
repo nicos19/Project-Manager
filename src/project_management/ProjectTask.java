@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class ProjectTask extends Task implements ActionListener {
     private List<SubTask> subTasks = new ArrayList<>();
-    private JButton newSubTaskButton = new JButton("Add New Sub-Task",
+    private JButton newSubTaskButton = new JButton("Add new Subtask",
                                       ResourceLoader.createImageIcon(getClass(),
                                      "/resources/plus-icon-small-16.png"));
 
@@ -24,7 +24,8 @@ public class ProjectTask extends Task implements ActionListener {
         JPanel taskPanel = super.getTaskPanel();
         taskPanel.add(newSubTaskButton, BorderLayout.SOUTH);
 
-        // color "Add new Sub-Task"-button
+        // initialize "Add new Sub-Task"-button
+        newSubTaskButton.addActionListener(this);
         newSubTaskButton.setBackground(new Color(0, 0, 153));
         newSubTaskButton.setForeground(new Color(0, 0, 153));
     }
@@ -42,7 +43,18 @@ public class ProjectTask extends Task implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newSubTaskButton) {
-            // user adds a new sub-task
+            // user clicked button to add new subtask
+            String newSubtaskName = JOptionPane.showInputDialog(super.getTaskPanel(),"Subtask Name");
+            if (newSubtaskName != null && newSubtaskName.length() > 0
+                                       && !ProjectManager.isBlank(newSubtaskName)) {
+                // user input is legal subtask name
+                addNewSubTask(newSubtaskName);
+            }
+            else if (newSubtaskName != null && (newSubtaskName.length() == 0
+                                            || ProjectManager.isBlank(newSubtaskName))) {
+                // user input is illegal -> error message
+                DialogCreation.createIllegalInputDialog(super.getTaskPanel());
+            }
 
         }
     }

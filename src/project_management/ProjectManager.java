@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Created by Nico Sonner on 09.12.2021.
+ *
  * This is a tool to manage projects. The user can create "Tasks" that specify which
  * features shall be implemented for the project.
  * The user can also create "Class Plans" to specify the classes that shall be
@@ -28,10 +29,10 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
     private JToggleButton taskManagerButton = new JToggleButton("Task Manager");
     private JToggleButton classManagerButton = new JToggleButton("Class Manager");
 
-    private JButton newTaskButton = new JButton("Add New Task",
+    private JButton newTaskButton = new JButton("Add new Project Task",
             ResourceLoader.createImageIcon(getClass(),
                                           "/resources/plus-icon-small-16.png"));
-    private JButton newClassPlanButton = new JButton("Add New Class Plan",
+    private JButton newClassPlanButton = new JButton("Add new Class Plan",
             ResourceLoader.createImageIcon(getClass(),
                                           "/resources/plus-icon-small-16.png"));
 
@@ -103,10 +104,7 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
     public void addNewProject(String projectName) {
         if (hasProject(projectName)) {
             // project with this name already exists -> error message
-            JOptionPane.showOptionDialog(this,
-                    "Project with this name already exists!","Error",
-                     JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE,
-                    null,null, null);
+            DialogCreation.createNameAlreadyExistsDialog(this, "Project");
             return;
         }
 
@@ -235,18 +233,19 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
             }
             else if (newProjectName != null && (newProjectName.length() == 0 || isBlank(newProjectName))) {
                 // user input is empty or blank -> illegal name -> error message
-                JOptionPane.showOptionDialog(this,
-                                             "Illegal project name!","Error",
-                                              JOptionPane.DEFAULT_OPTION,
-                                              JOptionPane.ERROR_MESSAGE,
-                                             null,null, null);
+                DialogCreation.createIllegalInputDialog(this);
             }
         }
         else if (e.getSource() == newTaskButton) {
             // user clicked button to create new project task
             String newTaskName = JOptionPane.showInputDialog(this, "Task Name");
-            if (newTaskName != null && newTaskName.length() > 0) {
+            if (newTaskName != null && newTaskName.length() > 0 && !isBlank(newTaskName)) {
+                // user input is legal project name
                 getSelectedProject().getTaskManager().addNewProjectTask(newTaskName, this);
+            }
+            else if (newTaskName != null && (newTaskName.length() == 0 || isBlank(newTaskName))) {
+                // user input is empty or blank -> illegal name -> error message
+                DialogCreation.createIllegalInputDialog(this);
             }
         }
         else if (e.getSource() == newClassPlanButton) {

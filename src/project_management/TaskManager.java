@@ -58,11 +58,7 @@ public class TaskManager {
     public void addNewProjectTask(String projectTaskName, ProjectManager projectManager) {
         if (hasTask(projectTaskName)) {
             // task with this name already exists -> error message
-            JOptionPane.showOptionDialog(projectManager,
-                                        "Task with this name already exists!","Error",
-                                         JOptionPane.DEFAULT_OPTION,
-                                         JOptionPane.ERROR_MESSAGE,
-                                        null,null, null);
+            DialogCreation.createNameAlreadyExistsDialog(projectManager, "Project Task");
             return;
         }
 

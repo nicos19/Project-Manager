@@ -22,7 +22,7 @@ public class ProjectTask extends Task {
         JPanel taskPanel = super.getTaskPanel();
         taskPanel.add(newSubTaskButton, BorderLayout.SOUTH);
 
-        // initialize "Add new Sub-Task"-button
+        // color "Add new Sub-Task"-button
         newSubTaskButton.setBackground(new Color(0, 0, 153));
         newSubTaskButton.setForeground(new Color(0, 0, 153));
 

@@ -16,13 +16,8 @@ public class TaskManager {
     private int indexOfSelectedTask = -1;
 
     public TaskManager() {
-        /*JPanel panelBlue = new JPanel();
-        panelBlue.setBackground(Color.BLUE);
-        basePane.add("Task 1", panelBlue);
-        basePane.setForegroundAt(0, Color.BLACK);
-
-        Icon icon = ResourceLoader.createImageIcon(getClass(), "/resources/Checkmark-icon-small.png");
-        basePane.setIconAt(0, icon);*/
+        //Icon icon = ResourceLoader.createImageIcon(getClass(), "/resources/Checkmark-icon-small.png");
+        //basePane.setIconAt(0, icon);
     }
 
     /**
@@ -66,6 +61,7 @@ public class TaskManager {
         ProjectTask newTask = new ProjectTask(projectTaskName, projectManager);
         tasks.add(newTask);
         basePane.add(projectTaskName, newTask.getTaskPanel());
+        basePane.setForegroundAt(tasks.size() - 1, new Color(0, 0, 153));
         selectTask(tasks.size() - 1);
     }
 

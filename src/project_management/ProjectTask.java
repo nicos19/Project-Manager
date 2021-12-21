@@ -16,10 +16,10 @@ public class ProjectTask extends Task implements ActionListener {
     private List<SubTask> subTasks = new ArrayList<>();
     private JButton newSubTaskButton = new JButton("Add new Subtask",
                                       ResourceLoader.createImageIcon(getClass(),
-                                     "/resources/plus-icon-small-16.png"));
+                                     "/resources/plus-icon-small-16-blue.png"));
 
     ProjectTask(String taskName, ProjectManager pm) {
-        super(taskName);
+        super(taskName, 18);
         projectManager = pm;
 
         // initialize taskPanel
@@ -33,8 +33,8 @@ public class ProjectTask extends Task implements ActionListener {
 
         // set task description details
         colorTaskDescription(new Color(0, 0, 153),       // headline color
-                                   new Color(190, 220, 255),   // headline background color
-                                   new Color(220, 240, 255));  // textArea color
+                             new Color(190, 220, 255),   // headline background color
+                             new Color(220, 240, 255));  // textArea color
         setDescriptionTextAreaRows(4);
         setDescriptionTextAreaMaxHeight(84);
     }

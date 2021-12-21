@@ -32,7 +32,7 @@ public class Task implements DocumentListener {
     private JTextArea descriptionTextArea = new JTextArea();
 
 
-    Task(String taskName) {
+    Task(String taskName, float headlineFontSize) {
         name = taskName;
 
         // initialize taskPanel
@@ -41,17 +41,18 @@ public class Task implements DocumentListener {
         // initialize contentPanel
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.add(descriptionPanel);
+        contentPanel.setBackground(Color.WHITE);
 
         // initialize descriptionPanel
         descriptionPanel.setLayout(new BoxLayout(descriptionPanel, BoxLayout.Y_AXIS));
-        descriptionPanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-        descriptionHeadlinePanel.setMaximumSize(new Dimension(10000000, 25));
-        descriptionHeadlinePanel.setMinimumSize(new Dimension(0, 25));
+        descriptionPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        descriptionHeadlinePanel.setMaximumSize(new Dimension(10000000, 30));
+        descriptionHeadlinePanel.setMinimumSize(new Dimension(0, 30));
         descriptionPanel.add(descriptionHeadlinePanel);
 
         // set description headline
         JLabel label = new JLabel(taskName);
-        label.setFont(label.getFont().deriveFont(14f));
+        label.setFont(label.getFont().deriveFont(headlineFontSize));
         label.setFont(label.getFont().deriveFont(Font.BOLD));
         descriptionHeadlinePanel.add(label);
 
@@ -115,6 +116,10 @@ public class Task implements DocumentListener {
      */
     void setDescriptionTextAreaMaxHeight(int height) {
         descriptionPanel.getComponent(1).setMaximumSize(new Dimension(1000000000, height));
+    }
+
+    void closeTask() {
+
     }
 
 

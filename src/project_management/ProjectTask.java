@@ -12,31 +12,53 @@ import java.util.List;
  * Created by Nico Sonner on 11.12.2021.
  */
 public class ProjectTask extends Task implements ActionListener {
+    private ProjectManager projectManager;
     private List<SubTask> subTasks = new ArrayList<>();
     private JButton newSubTaskButton = new JButton("Add new Subtask",
                                       ResourceLoader.createImageIcon(getClass(),
                                      "/resources/plus-icon-small-16.png"));
 
-    public ProjectTask(String taskName) {
+    ProjectTask(String taskName, ProjectManager pm) {
         super(taskName);
+        projectManager = pm;
 
         // initialize taskPanel
-        JPanel taskPanel = super.getTaskPanel();
+        JPanel taskPanel = getTaskPanel();
         taskPanel.add(newSubTaskButton, BorderLayout.SOUTH);
 
         // initialize "Add new Sub-Task"-button
         newSubTaskButton.addActionListener(this);
         newSubTaskButton.setBackground(new Color(0, 0, 153));
         newSubTaskButton.setForeground(new Color(0, 0, 153));
+
+        // set task description details
+        colorTaskDescription(new Color(0, 0, 153),       // headline color
+                                   new Color(190, 220, 255),   // headline background color
+                                   new Color(220, 240, 255));  // textArea color
+        setDescriptionTextAreaRows(4);
+        setDescriptionTextAreaMaxHeight(84);
     }
 
     /**
      * Adds a new sub-task to this project task.
      * @param subTaskName the name of the new sub-task
      */
-    public void addNewSubTask(String subTaskName) {
+    private void addNewSubTask(String subTaskName) {
+        if (TaskManager.hasTask(subTaskName, subTasks)) {
+            // subtask with this name already exists -> error message
+            DialogCreation.createNameAlreadyExistsDialog(projectManager, "Subtask");
+            return;
+        }
+
+        // create new subtask
         SubTask newSubTask = new SubTask(subTaskName, this);
         subTasks.add(newSubTask);
+
+        // show new subtask in project manager
+        JPanel contentPanel = getContentPanel();
+        contentPanel.add(newSubTask.getTaskPanel());
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }
 
 

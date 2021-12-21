@@ -295,7 +295,7 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
         }
 
         ProjectManager pm = new ProjectManager(("Project Manager"));
-        pm.setSize(600, 200);
+        pm.setSize(600, 500);
         pm.setVisible(true);
 
         pm.addNewProject("First Project");

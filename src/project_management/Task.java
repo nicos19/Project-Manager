@@ -25,13 +25,15 @@ public class Task implements DocumentListener {
     // contains task description
     private JPanel descriptionPanel = new JPanel();
 
-    public Task(String taskName) {
-        name = taskName;
+    // contains description headline (task name), is part of descriptionPanel
+    private JPanel descriptionHeadlinePanel = new JPanel();
 
-        // create colors (BG = background, FG = foreground)
-        Color descriptionHeadlineColorBG = new Color(190, 220, 255);
-        Color descriptionHeadlineColorFG = new Color(0, 0, 153);
-        Color descriptionTextColorBG = new Color(220, 240, 255);
+    // contains textArea of description, is part of descriptionPanel
+    private JTextArea descriptionTextArea = new JTextArea();
+
+
+    Task(String taskName) {
+        name = taskName;
 
         // initialize taskPanel
         taskPanel.add(contentPanel, BorderLayout.CENTER);
@@ -42,29 +44,24 @@ public class Task implements DocumentListener {
 
         // initialize descriptionPanel
         descriptionPanel.setLayout(new BoxLayout(descriptionPanel, BoxLayout.Y_AXIS));
-        JPanel descriptionHeadlinePanel = new JPanel();
-        descriptionHeadlinePanel.setMaximumSize(new Dimension(10000000, 20));
-        descriptionHeadlinePanel.setBackground(descriptionHeadlineColorBG);
+        descriptionPanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        descriptionHeadlinePanel.setMaximumSize(new Dimension(10000000, 25));
+        descriptionHeadlinePanel.setMinimumSize(new Dimension(0, 25));
         descriptionPanel.add(descriptionHeadlinePanel);
 
         // set description headline
         JLabel label = new JLabel(taskName);
         label.setFont(label.getFont().deriveFont(14f));
         label.setFont(label.getFont().deriveFont(Font.BOLD));
-        label.setForeground(descriptionHeadlineColorFG);
         descriptionHeadlinePanel.add(label);
 
         // set description text area
-        JTextArea textArea = new JTextArea();
-        textArea.setRows(4);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-        textArea.setBackground(descriptionTextColorBG);
-        textArea.getDocument().addDocumentListener(this);
-        JScrollPane textScrollPane = new JScrollPane(textArea,
+        descriptionTextArea.setLineWrap(true);
+        descriptionTextArea.setWrapStyleWord(true);
+        descriptionTextArea.getDocument().addDocumentListener(this);
+        JScrollPane textScrollPane = new JScrollPane(descriptionTextArea,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        textScrollPane.setMaximumSize(new Dimension(1000000000, 85));
         descriptionPanel.add(textScrollPane);
     }
 
@@ -72,7 +69,7 @@ public class Task implements DocumentListener {
      * Gets the name of this task.
      * @return the task name
      */
-    public String getName() {
+    String getName() {
         return name;
     }
 
@@ -80,8 +77,44 @@ public class Task implements DocumentListener {
      * Gets the JPanel that is the visual representation of the task instance.
      * @return the JPanel (taskPanel)
      */
-    public JPanel getTaskPanel() {
+    JPanel getTaskPanel() {
         return taskPanel;
+    }
+
+    /**
+     * Gets the contentPanel which contains the task description and the subtasks panels.
+     * @return the contentPanel
+     */
+    JPanel getContentPanel() {
+        return contentPanel;
+    }
+
+    /**
+     * Colors the descriptionPanel of this task, i. e. the headline and its background and the textArea
+     * @param headlineColor the color for the label inside of descriptionHeadlinePanel
+     * @param headlineBackgroundColor the background color for descriptionHeadlinePanel
+     * @param textAreaColor the background color for descriptionTextArea
+     */
+    void colorTaskDescription(Color headlineColor, Color headlineBackgroundColor, Color textAreaColor) {
+        descriptionHeadlinePanel.getComponent(0).setForeground(headlineColor);
+        descriptionHeadlinePanel.setBackground(headlineBackgroundColor);
+        descriptionTextArea.setBackground(textAreaColor);
+    }
+
+    /**
+     * Sets the number of rows for descriptionTextArea
+     * @param rows the number of rows
+     */
+    void setDescriptionTextAreaRows(int rows) {
+        descriptionTextArea.setRows(rows);
+    }
+
+    /**
+     * Sets the maximum height of descriptionTextArea.
+     * @param height the maximum height
+     */
+    void setDescriptionTextAreaMaxHeight(int height) {
+        descriptionPanel.getComponent(1).setMaximumSize(new Dimension(1000000000, height));
     }
 
 

@@ -63,7 +63,7 @@ public class TaskManager {
         }
 
         // create new task
-        ProjectTask newTask = new ProjectTask(projectTaskName);
+        ProjectTask newTask = new ProjectTask(projectTaskName, projectManager);
         tasks.add(newTask);
         basePane.add(projectTaskName, newTask.getTaskPanel());
         selectTask(tasks.size() - 1);
@@ -74,9 +74,24 @@ public class TaskManager {
      * @param name the possible task name
      * @return true if tasks list has a task called "name", false otherwise
      */
-    public boolean hasTask(String name) {
+    private boolean hasTask(String name) {
         for (ProjectTask t : tasks) {
             if (t.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether the given list of subtasks contains a subtask with given name.
+     * @param name the possible subtask name
+     * @param subTasks the list of subtasks
+     * @return true if subTasks has a subtask called "name", false otherwise
+     */
+    static boolean hasTask(String name, List<SubTask> subTasks) {
+        for (SubTask s : subTasks) {
+            if (s.getName().equals(name)) {
                 return true;
             }
         }

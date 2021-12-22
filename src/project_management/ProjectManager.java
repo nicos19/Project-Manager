@@ -30,11 +30,9 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
     private JToggleButton classManagerButton = new JToggleButton("Class Manager");
 
     private JButton newTaskButton = new JButton("Add new Project Task",
-            ResourceLoader.createImageIcon(getClass(),
-                                          "/resources/plus-icon-small-16.png"));
+            IconCreation.createGreenPlus());
     private JButton newClassPlanButton = new JButton("Add new Class Plan",
-            ResourceLoader.createImageIcon(getClass(),
-                                          "/resources/plus-icon-small-16.png"));
+            IconCreation.createGreenPlus());
 
     private List<Project> projects = new ArrayList<>();
     private int indexOfSelectedProject = -1;

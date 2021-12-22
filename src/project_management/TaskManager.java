@@ -1,7 +1,10 @@
 package project_management;
 
+import com.sun.prism.paint.*;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 

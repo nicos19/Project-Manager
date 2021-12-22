@@ -15,8 +15,7 @@ public class ProjectTask extends Task implements ActionListener {
     private ProjectManager projectManager;
     private List<SubTask> subTasks = new ArrayList<>();
     private JButton newSubTaskButton = new JButton("Add new Subtask",
-                                      ResourceLoader.createImageIcon(getClass(),
-                                     "/resources/plus-icon-small-16-blue.png"));
+                                       IconCreation.createBluePlus());
 
     ProjectTask(String taskName, ProjectManager pm) {
         super(taskName, 18);

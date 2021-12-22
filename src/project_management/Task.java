@@ -21,6 +21,7 @@ public class Task implements DocumentListener {
     // contains descriptionPanel and
     // for project tasks only: contains also sub-tasks panels
     private JPanel contentPanel = new JPanel();
+    private JScrollPane scrollPane;
 
     // contains task description
     private JPanel descriptionPanel = new JPanel();
@@ -31,12 +32,35 @@ public class Task implements DocumentListener {
     // contains textArea of description, is part of descriptionPanel
     private JTextArea descriptionTextArea = new JTextArea();
 
+    private JButton editTaskButton = new JButton("Edit");
+
 
     Task(String taskName, float headlineFontSize) {
         name = taskName;
 
+        JToolBar tbar = new JToolBar();
+        tbar.setBackground(new Color(0, 0, 153));
+        tbar.setFloatable(false);
+        JButton firstButton = new JButton("Close Task");
+        firstButton.setBackground(new Color(220, 240, 255));
+        tbar.add(firstButton);
+        tbar.add(new JButton("Delete Task"));
+        //tbar.addSeparator();
+        tbar.add(new JButton("Edit Name"));
+        taskPanel.add(tbar, BorderLayout.NORTH);
+
         // initialize taskPanel
-        taskPanel.add(contentPanel, BorderLayout.CENTER);
+        scrollPane = new JScrollPane(contentPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        contentPanel.setPreferredSize(new Dimension(500, 500));
+
+        //taskPanel.add(contentPanel, BorderLayout.CENTER);
+        scrollPane.setBackground(Color.RED);
+        contentPanel.setBackground(Color.YELLOW);
+        taskPanel.setBackground(Color.GREEN);
+        taskPanel.add(scrollPane, BorderLayout.CENTER);
+
+
 
         // initialize contentPanel
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
@@ -46,11 +70,15 @@ public class Task implements DocumentListener {
         // initialize descriptionPanel
         descriptionPanel.setLayout(new BoxLayout(descriptionPanel, BoxLayout.Y_AXIS));
         descriptionPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        descriptionHeadlinePanel.setMaximumSize(new Dimension(10000000, 30));
-        descriptionHeadlinePanel.setMinimumSize(new Dimension(0, 30));
         descriptionPanel.add(descriptionHeadlinePanel);
 
-        // set description headline
+        // initialize descriptionHeadlinePanel
+        descriptionHeadlinePanel.setLayout(new BoxLayout(descriptionHeadlinePanel, BoxLayout.X_AXIS));
+        descriptionHeadlinePanel.setMaximumSize(new Dimension(10000000, 30));
+        descriptionHeadlinePanel.setMinimumSize(new Dimension(0, 30));
+        descriptionHeadlinePanel.add(editTaskButton);
+
+        // set description headline label
         JLabel label = new JLabel(taskName);
         label.setFont(label.getFont().deriveFont(headlineFontSize));
         label.setFont(label.getFont().deriveFont(Font.BOLD));
@@ -91,15 +119,21 @@ public class Task implements DocumentListener {
     }
 
     /**
-     * Colors the descriptionPanel of this task, i. e. the headline and its background and the textArea
+     * Colors the descriptionPanel of this task,
+     * i. e. the edit button, the headline (and its background) and the textArea
      * @param headlineColor the color for the label inside of descriptionHeadlinePanel
      * @param headlineBackgroundColor the background color for descriptionHeadlinePanel
      * @param textAreaColor the background color for descriptionTextArea
      */
-    void colorTaskDescription(Color headlineColor, Color headlineBackgroundColor, Color textAreaColor) {
-        descriptionHeadlinePanel.getComponent(0).setForeground(headlineColor);
+    void colorTaskDescription(Color headlineColor, Color headlineBackgroundColor,
+                              Color textAreaColor) {
+        descriptionHeadlinePanel.getComponent(1).setForeground(headlineColor);
         descriptionHeadlinePanel.setBackground(headlineBackgroundColor);
         descriptionTextArea.setBackground(textAreaColor);
+
+        // edit button gets same color as headline
+        editTaskButton.setForeground(headlineColor);
+        editTaskButton.setBackground(headlineColor);
     }
 
     /**
@@ -116,10 +150,6 @@ public class Task implements DocumentListener {
      */
     void setDescriptionTextAreaMaxHeight(int height) {
         descriptionPanel.getComponent(1).setMaximumSize(new Dimension(1000000000, height));
-    }
-
-    void closeTask() {
-
     }
 
 

@@ -15,27 +15,39 @@ public class ProjectTask extends Task implements ActionListener {
     private ProjectManager projectManager;
     private List<SubTask> subTasks = new ArrayList<>();
     private JButton newSubTaskButton = new JButton("Add new Subtask",
-                                       IconCreation.createBluePlus());
+            IconCreation.createBluePlus());
+
+    // tabView.basePane contains project task visual representation and the
+    // representation of all its subtasks
+    private ManagedTabView tabView = new ManagedTabView();
+
+    // contains tabView.basePane and newSubTaskButton
+    private JPanel projectTaskPanel = new JPanel(new BorderLayout());
+
 
     ProjectTask(String taskName, ProjectManager pm) {
-        super(taskName, 18);
+        super(taskName);
         projectManager = pm;
 
         // initialize taskPanel
-        JPanel taskPanel = getTaskPanel();
-        taskPanel.add(newSubTaskButton, BorderLayout.SOUTH);
+        projectTaskPanel.add(tabView.getBasePane(), BorderLayout.CENTER);
+        projectTaskPanel.add(newSubTaskButton, BorderLayout.SOUTH);
 
-        // initialize "Add new Sub-Task"-button
+        // initialize task's description
+        getDescription().setProjectTaskLook();
+
+        // initialize tabView (add project task's description to tabView)
+        tabView.setTaskManagerView();
+        tabView.addDescription(getDescription());
+
+        // initialize newSubTaskButton
         newSubTaskButton.addActionListener(this);
         newSubTaskButton.setBackground(new Color(0, 0, 153));
         newSubTaskButton.setForeground(new Color(0, 0, 153));
+    }
 
-        // set task description details
-        colorTaskDescription(new Color(0, 0, 153),       // headline color
-                             new Color(190, 220, 255),   // headline background color
-                             new Color(220, 240, 255));  // textArea color
-        setDescriptionTextAreaRows(4);
-        setDescriptionTextAreaMaxHeight(84);
+    JPanel getProjectTaskPanel() {
+        return projectTaskPanel;
     }
 
     /**
@@ -54,10 +66,10 @@ public class ProjectTask extends Task implements ActionListener {
         subTasks.add(newSubTask);
 
         // show new subtask in project manager
-        JPanel contentPanel = getContentPanel();
-        contentPanel.add(newSubTask.getTaskPanel());
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        tabView.addDescription(newSubTask.getDescription());
+
+        projectManager.revalidate();
+        projectManager.repaint();
     }
 
 
@@ -65,7 +77,7 @@ public class ProjectTask extends Task implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newSubTaskButton) {
             // user clicked button to add new subtask
-            String newSubtaskName = JOptionPane.showInputDialog(super.getTaskPanel(),"Subtask Name");
+            String newSubtaskName = JOptionPane.showInputDialog(projectTaskPanel,"Subtask Name");
             if (newSubtaskName != null && newSubtaskName.length() > 0
                                        && !ProjectManager.isBlank(newSubtaskName)) {
                 // user input is legal subtask name
@@ -74,7 +86,7 @@ public class ProjectTask extends Task implements ActionListener {
             else if (newSubtaskName != null && (newSubtaskName.length() == 0
                                             || ProjectManager.isBlank(newSubtaskName))) {
                 // user input is illegal -> error message
-                DialogCreation.createIllegalInputDialog(super.getTaskPanel());
+                DialogCreation.createIllegalInputDialog(projectTaskPanel);
             }
 
         }

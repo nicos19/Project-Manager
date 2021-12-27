@@ -18,9 +18,8 @@ public class TaskManager {
     private List<ProjectTask> tasks = new ArrayList<>();
     private int indexOfSelectedTask = -1;
 
-    public TaskManager() {
-        //Icon icon = ResourceLoader.createImageIcon(getClass(), "/resources/Checkmark-icon-small.png");
-        //basePane.setIconAt(0, icon);
+    TaskManager() {
+
     }
 
     /**
@@ -28,7 +27,7 @@ public class TaskManager {
      * manager view.
      * @return the basePane
      */
-    public JTabbedPane getBasePane() {
+    JTabbedPane getBasePane() {
         return basePane;
     }
 
@@ -36,7 +35,7 @@ public class TaskManager {
      * Selects the tasks at given index.
      * @param index index of the task to select
      */
-    public void selectTask(int index) {
+    private void selectTask(int index) {
         if (index >= 0 && tasks.size() > index) {
             indexOfSelectedTask = index;
             basePane.setSelectedIndex(index);
@@ -45,15 +44,12 @@ public class TaskManager {
         }
     }
 
-    public ProjectTask getSelectedTask() {
-        return tasks.get(indexOfSelectedTask);
-    }
-
     /**
      * Creates a new project task for the project associated with this task manager.
      * @param projectTaskName the name of the new task
+     * @param projectManager the project manager of this task manager instance
      */
-    public void addNewProjectTask(String projectTaskName, ProjectManager projectManager) {
+    void addNewProjectTask(String projectTaskName, ProjectManager projectManager) {
         if (hasTask(projectTaskName)) {
             // task with this name already exists -> error message
             DialogCreation.createNameAlreadyExistsDialog(projectManager, "Project Task");

@@ -153,7 +153,7 @@ public class Description {
         basePanel.setMaximumSize(new Dimension(1000000, 145));
     }
 
-    void setClassFieldLook() {
+    void setClassFieldsLook() {
         // Description instance for class fields has no "delete" or "edit" button
         toolBar.remove(deleteButton);
         toolBar.remove(editNameButton);

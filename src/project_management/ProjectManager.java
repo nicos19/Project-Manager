@@ -238,7 +238,7 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
             // user clicked button to create new project task
             String newTaskName = JOptionPane.showInputDialog(this, "Task Name");
             if (newTaskName != null && newTaskName.length() > 0 && !isBlank(newTaskName)) {
-                // user input is legal project name
+                // user input is legal project task name
                 getSelectedProject().getTaskManager().addNewProjectTask(newTaskName, this);
             }
             else if (newTaskName != null && (newTaskName.length() == 0 || isBlank(newTaskName))) {
@@ -248,7 +248,15 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
         }
         else if (e.getSource() == newClassPlanButton) {
             // user clicked button to create new class plan
-
+            String newClassPlanName = JOptionPane.showInputDialog(this, "Class Plan Name");
+            if (newClassPlanName != null && newClassPlanName.length() > 0 && !isBlank(newClassPlanName)) {
+                // user input is legal class plan name
+                getSelectedProject().getClassManager().addNewClassPlan(newClassPlanName, this);
+            }
+            else if (newClassPlanName != null && (newClassPlanName.length() == 0 || isBlank(newClassPlanName))) {
+                // user input is empty or blank -> illegal name -> error message
+                DialogCreation.createIllegalInputDialog(this);
+            }
         }
     }
 

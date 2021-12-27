@@ -17,7 +17,7 @@ public class ProjectTask extends Task implements ActionListener {
     private JButton newSubTaskButton = new JButton("Add new Subtask",
             IconCreation.createBluePlus());
 
-    // tabView.basePane contains project task visual representation and the
+    // tabView.basePane contains project task's visual representation and the
     // representation of all its subtasks
     private ManagedTabView tabView = new ManagedTabView();
 
@@ -46,6 +46,11 @@ public class ProjectTask extends Task implements ActionListener {
         newSubTaskButton.setForeground(new Color(0, 0, 153));
     }
 
+    /**
+     * Gets the panel that contains the visual representation of the project task
+     * (including all subtasks) and with the newSubTaskButton.
+     * @return the projectTaskPanel
+     */
     JPanel getProjectTaskPanel() {
         return projectTaskPanel;
     }

@@ -7,13 +7,15 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
  * Created by Nico Sonner on 11.12.2021.
  */
-public class Task {
+public class Task implements ActionListener{
     private String name;
     private boolean isOpen = false;
     private Description description;
@@ -21,7 +23,7 @@ public class Task {
 
     Task(String taskName) {
         name = taskName;
-        description = new Description(name);
+        description = new Description(name, this);
     }
 
     /**
@@ -40,4 +42,8 @@ public class Task {
         return description;
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }

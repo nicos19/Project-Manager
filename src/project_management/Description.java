@@ -2,11 +2,14 @@ package project_management;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Nico Sonner on 23.12.2021.
  */
 public class Description {
+    private String title;
+
     private JPanel basePanel = new JPanel();
 
     private JToolBar toolBar = new JToolBar();
@@ -24,7 +27,9 @@ public class Description {
     private Color[] oldColors;
 
 
-    Description(String title) {
+    Description(String descriptionTitle, ActionListener actionListener) {
+        title = descriptionTitle;
+
         // initialize basePanel
         basePanel.setLayout(new BorderLayout());
 
@@ -36,11 +41,14 @@ public class Description {
         toolBar.add(deleteButton);
         toolBar.add(editNameButton);
 
-        // set button colors
+        // initialize buttons
         setButtonColors();
+        closeButton.addActionListener(actionListener);
+        deleteButton.addActionListener(actionListener);
+        editNameButton.addActionListener(actionListener);
 
         // initialize titlePanel
-        titleLabel = new JLabel(title);
+        titleLabel = new JLabel(descriptionTitle);
         titlePanel.add(titleLabel);
 
         // initialize textPane
@@ -76,11 +84,11 @@ public class Description {
         editNameButton.setBackground(new Color(220, 240, 255));
     }
 
-    void setTextAreaRows(int rows) {
+    private void setTextAreaRows(int rows) {
         ((JTextArea)textPane.getViewport().getView()).setRows(rows);
     }
 
-    void setHeadlineFontSize(int fontSize) {
+    private void setHeadlineFontSize(int fontSize) {
         titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.BOLD, fontSize));
     }
 

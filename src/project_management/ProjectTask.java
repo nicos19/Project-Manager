@@ -82,7 +82,8 @@ public class ProjectTask extends Task implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newSubTaskButton) {
             // user clicked button to add new subtask
-            String newSubtaskName = JOptionPane.showInputDialog(projectTaskPanel,"Subtask Name");
+            String newSubtaskName = JOptionPane.showInputDialog(projectTaskPanel,
+                    "Subtask Name");
             if (newSubtaskName != null && newSubtaskName.length() > 0
                                        && !ProjectManager.isBlank(newSubtaskName)) {
                 // user input is legal subtask name
@@ -93,7 +94,25 @@ public class ProjectTask extends Task implements ActionListener {
                 // user input is illegal -> error message
                 DialogCreation.createIllegalInputDialog(projectTaskPanel);
             }
-
+        }
+        else if (e.getSource() instanceof JButton) {
+            if (((JButton) e.getSource()).getText().equals("Close")) {
+                getDescription().setClosedLook();
+            }
+            else if (((JButton) e.getSource()).getText().equals("Reopen")) {
+                getDescription().setBeforeClosedLook();
+            }
+            else if (((JButton) e.getSource()).getText().equals("Delete")) {
+                // ask for delete confirmation
+                int delete = JOptionPane.showOptionDialog(projectManager,
+                        "Delete this Project Task (including all its Subtasks)?",
+                        "Please confirm", JOptionPane.OK_CANCEL_OPTION,
+                         JOptionPane.WARNING_MESSAGE, null, null, null);
+                if (delete == JOptionPane.OK_OPTION) {
+                    // delete project task (and all subtasks)
+                    projectManager.getSelectedProject().getTaskManager().deleteProjectTask(this);
+                }
+            }
         }
     }
 }

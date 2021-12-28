@@ -1,12 +1,15 @@
 package project_management;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  * Created by Nico Sonner on 27.12.2021.
  *
  * A Method instance is used to describe a method  and how it shall look like.
  * Methods instances are parts of a class plan.
  */
-class Method {
+class Method implements ActionListener {
     private String name;
     private boolean isOpen = false;
     private Description description;
@@ -15,7 +18,7 @@ class Method {
 
     Method(String methodName, ClassPlan parentPlan) {
         name = methodName;
-        description = new Description(name);
+        description = new Description(name, this);
         parentClassPlan = parentPlan;
 
         // initialize methods's description
@@ -36,5 +39,10 @@ class Method {
      */
     Description getDescription() {
         return description;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

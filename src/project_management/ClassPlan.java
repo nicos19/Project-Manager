@@ -33,7 +33,7 @@ class ClassPlan implements ActionListener {
 
     ClassPlan(String className, ProjectManager pm) {
         name = className;
-        description = new Description(name);
+        description = new Description(name, this);
         projectManager = pm;
 
         // initialize classPlanPanel
@@ -44,7 +44,7 @@ class ClassPlan implements ActionListener {
         description.setClassPlanLook();
 
         // initialize class plan's fields description
-        fields = new Description("Fields");
+        fields = new Description("Fields", this);
         fields.setClassFieldsLook();
 
         // initialize tabView

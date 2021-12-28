@@ -64,6 +64,27 @@ public class TaskManager {
         selectTask(tasks.size() - 1);
     }
 
+    void deleteProjectTask(ProjectTask projectTask) {
+        // delete projectTask
+        int indexOfDeletedTask = tasks.indexOf(projectTask);
+        basePane.remove(projectTask.getProjectTaskPanel());
+        tasks.remove(projectTask);
+
+        // select other task (if existing)
+        if (tasks.size() > 0) {
+            if (indexOfDeletedTask == tasks.size()) {  // last task was deleted
+                selectTask(tasks.size() - 1);
+            }
+            else {
+                selectTask(indexOfDeletedTask);
+            }
+        }
+        else {
+            // no task selected
+            indexOfSelectedTask = -1;
+        }
+    }
+
     /**
      * Checks whether tasks list contains a project task with given name.
      * @param name the possible task name

@@ -50,7 +50,7 @@ public class ClassManager {
      */
     void addNewClassPlan(String classPlanName, ProjectManager projectManager) {
         if (hasClassPlan(classPlanName)) {
-            // clas plan with this name already exists -> error message
+            // class plan with this name already exists -> error message
             DialogCreation.createNameAlreadyExistsDialog(projectManager, "Class Plan");
             return;
         }

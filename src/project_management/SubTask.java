@@ -15,4 +15,12 @@ public class SubTask extends Task {
         // initialize task's description
         getDescription().setSubTaskLook();
     }
+
+    /**
+     * Gets the project task that this subtask is part of.
+     * @return the parentTask
+     */
+    ProjectTask getParentTask() {
+        return parentTask;
+    }
 }

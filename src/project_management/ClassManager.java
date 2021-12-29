@@ -9,17 +9,12 @@ import java.util.List;
  * Created by Nico Sonner on 09.12.2021.
  * A ClassManager instance manages the class manager view in the project manager.
  */
-public class ClassManager {
+class ClassManager {
     private JTabbedPane basePane = new JTabbedPane(JTabbedPane.LEFT,
                                                    JTabbedPane.SCROLL_TAB_LAYOUT);
     private java.util.List<ClassPlan> classPlans = new ArrayList<>();
-    private int indexOfSelectedClassPlan = -1;
 
-    ClassManager() {
-        /*JPanel panelGreen = new JPanel();
-        panelGreen.setBackground(Color.GREEN);
-        basePane.add(panelGreen);*/
-    }
+    ClassManager() {    }
 
     /**
      * Returns the JTabbedPane that contains all relevant containers for the class
@@ -31,12 +26,19 @@ public class ClassManager {
     }
 
     /**
+     * Updates the title of currently selected tab.
+     * @param newTitle the new title
+     */
+    void updateTabTitleOfSelectedTab(String newTitle) {
+        basePane.setTitleAt(basePane.getSelectedIndex(), newTitle);
+    }
+
+    /**
      * Selects the class plan at given index.
      * @param index index of the class plan to select
      */
     private void selectClassPlan(int index) {
         if (index >= 0 && classPlans.size() > index) {
-            indexOfSelectedClassPlan = index;
             basePane.setSelectedIndex(index);
             basePane.revalidate();
             basePane.repaint();
@@ -61,6 +63,27 @@ public class ClassManager {
         basePane.add(classPlanName, newClassPlan.getClassPlanPanel());
         basePane.setForegroundAt(classPlans.size() - 1, new Color(0, 0, 153));
         selectClassPlan(classPlans.size() - 1);
+    }
+
+    /**
+     * Deletes the given class plan.
+     * @param classPlan the class plan to be deleted
+     */
+    void deleteClassPlan(ClassPlan classPlan) {
+        // delete classPlan
+        int indexOfDeletedPlan = classPlans.indexOf(classPlan);
+        basePane.remove(classPlan.getClassPlanPanel());
+        classPlans.remove(classPlan);
+
+        // select other class plan (if existing)
+        if (classPlans.size() > 0) {
+            if (indexOfDeletedPlan == classPlans.size()) {  // last plan was deleted
+                selectClassPlan(classPlans.size() - 1);
+            }
+            else {
+                selectClassPlan(indexOfDeletedPlan);
+            }
+        }
     }
 
     /**

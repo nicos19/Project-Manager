@@ -85,6 +85,23 @@ class ClassPlan implements ActionListener {
     }
 
     /**
+     * Gets the project manager that is responsible for this class plan.
+     * @return the projectManager
+     */
+    ProjectManager getProjectManager() {
+        return projectManager;
+    }
+
+    /**
+     * Rename this class plan.
+     * @param newName the new name
+     */
+    void rename(String newName) {
+        name = newName;
+        description.setNewTitle(newName);
+    }
+
+    /**
      * Adds a new method to this class plan.
      * @param methodName the name of the new method
      */
@@ -104,6 +121,15 @@ class ClassPlan implements ActionListener {
 
         projectManager.revalidate();
         projectManager.repaint();
+    }
+
+    /**
+     * Deletes the given method.
+     * @param method the method to be deleted
+     */
+    void deleteMethod(Method method) {
+        methods.remove(method);
+        tabView.removeDescription(method.getDescription());
     }
 
     @Override

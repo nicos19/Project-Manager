@@ -42,6 +42,15 @@ public class Task implements ActionListener{
         return description;
     }
 
+    /**
+     * Rename this task.
+     * @param newName the new name
+     */
+    void rename(String newName) {
+        name = newName;
+        description.setNewTitle(newName);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 

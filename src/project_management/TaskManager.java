@@ -10,17 +10,15 @@ import java.util.List;
 
 /**
  * Created by Nico Sonner on 10.12.2021.
+ *
  * A TaskManager instance manages the task manager view in the project manager.
  */
-public class TaskManager {
+class TaskManager {
     private JTabbedPane basePane = new JTabbedPane(JTabbedPane.LEFT,
                                                    JTabbedPane.SCROLL_TAB_LAYOUT);
     private List<ProjectTask> tasks = new ArrayList<>();
-    private int indexOfSelectedTask = -1;
 
-    TaskManager() {
-
-    }
+    TaskManager() {    }
 
     /**
      * Returns the JTabbedPane that contains all relevant containers for the task
@@ -32,12 +30,19 @@ public class TaskManager {
     }
 
     /**
+     * Updates the title of currently selected tab.
+     * @param newTitle the new title
+     */
+    void updateTabTitleOfSelectedTab(String newTitle) {
+        basePane.setTitleAt(basePane.getSelectedIndex(), newTitle);
+    }
+
+    /**
      * Selects the tasks at given index.
      * @param index index of the task to select
      */
     private void selectTask(int index) {
         if (index >= 0 && tasks.size() > index) {
-            indexOfSelectedTask = index;
             basePane.setSelectedIndex(index);
             basePane.revalidate();
             basePane.repaint();
@@ -64,13 +69,17 @@ public class TaskManager {
         selectTask(tasks.size() - 1);
     }
 
+    /**
+     * Deletes the given project task.
+     * @param projectTask the project task to be deleted
+     */
     void deleteProjectTask(ProjectTask projectTask) {
         // delete projectTask
         int indexOfDeletedTask = tasks.indexOf(projectTask);
         basePane.remove(projectTask.getProjectTaskPanel());
         tasks.remove(projectTask);
 
-        // select other task (if existing)
+        // select other project task (if existing)
         if (tasks.size() > 0) {
             if (indexOfDeletedTask == tasks.size()) {  // last task was deleted
                 selectTask(tasks.size() - 1);
@@ -78,10 +87,6 @@ public class TaskManager {
             else {
                 selectTask(indexOfDeletedTask);
             }
-        }
-        else {
-            // no task selected
-            indexOfSelectedTask = -1;
         }
     }
 

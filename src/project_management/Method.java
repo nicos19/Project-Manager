@@ -41,6 +41,19 @@ class Method implements ActionListener {
         return description;
     }
 
+    /**
+     * Gets the class plan this method is part of.
+     * @return the parentClassPlan
+     */
+    ClassPlan getParentClassPlan() {
+        return parentClassPlan;
+    }
+
+    void rename(String newName) {
+        name = newName;
+        description.setNewTitle(newName);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 

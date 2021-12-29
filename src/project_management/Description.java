@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
  */
 public class Description {
     private String title;
+    private boolean isOpen = true;
 
     private JPanel basePanel = new JPanel();
 
@@ -48,7 +49,7 @@ public class Description {
         editNameButton.addActionListener(actionListener);
 
         // initialize titlePanel
-        titleLabel = new JLabel(descriptionTitle);
+        titleLabel = new JLabel(title);
         titlePanel.add(titleLabel);
 
         // initialize textPane
@@ -76,6 +77,16 @@ public class Description {
 
     JPanel getBasePanel() {
         return basePanel;
+    }
+
+    void setNewTitle(String newTitle) {
+        title = newTitle;
+        if (isOpen) {
+            titleLabel.setText(title);
+        }
+        else {
+            titleLabel.setText(title + " - CLOSED");
+        }
     }
 
     private void setButtonColors() {
@@ -216,11 +227,13 @@ public class Description {
     }
 
     void setClosedLook() {
+        isOpen = false;
+
         // change closeButton to "reopen" button
         closeButton.setText("Reopen");
 
         // change title
-        titleLabel.setText(titleLabel.getText() + " - CLOSED");
+        titleLabel.setText(title + " - CLOSED");
 
         // remember old colors
         oldColors = new Color[]{toolBar.getBackground(), titlePanel.getBackground(),
@@ -239,11 +252,13 @@ public class Description {
     }
 
     void setBeforeClosedLook() {
+        isOpen = true;
+
         // reset closeButton text
         closeButton.setText("Close");
 
         // reset title
-        titleLabel.setText(titleLabel.getText().split(" -")[0]);
+        titleLabel.setText(title);
 
         // reset coloring
         toolBar.setBackground(oldColors[0]);

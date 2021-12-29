@@ -56,6 +56,14 @@ public class ProjectTask extends Task implements ActionListener {
     }
 
     /**
+     * Gets the project manager that is responsible for this project task.
+     * @return the projectManager
+     */
+    ProjectManager getProjectManager() {
+        return projectManager;
+    }
+
+    /**
      * Adds a new sub-task to this project task.
      * @param subTaskName the name of the new sub-task
      */
@@ -77,6 +85,15 @@ public class ProjectTask extends Task implements ActionListener {
         projectManager.repaint();
     }
 
+    /**
+     * Deletes the given subtask.
+     * @param subTask the subtask to be deleted
+     */
+    void deleteSubTask(SubTask subTask) {
+        subTasks.remove(subTask);
+        tabView.removeDescription(subTask.getDescription());
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -84,22 +101,22 @@ public class ProjectTask extends Task implements ActionListener {
             // user clicked button to add new subtask
             String newSubtaskName = JOptionPane.showInputDialog(projectTaskPanel,
                     "Subtask Name");
-            if (newSubtaskName != null && newSubtaskName.length() > 0
-                                       && !ProjectManager.isBlank(newSubtaskName)) {
+            if (DialogCreation.isInputLegal(newSubtaskName)) {
                 // user input is legal subtask name
                 addNewSubTask(newSubtaskName);
             }
-            else if (newSubtaskName != null && (newSubtaskName.length() == 0
-                                            || ProjectManager.isBlank(newSubtaskName))) {
+            else if (DialogCreation.isInputIllegal(newSubtaskName)) {
                 // user input is illegal -> error message
                 DialogCreation.createIllegalInputDialog(projectTaskPanel);
             }
         }
         else if (e.getSource() instanceof JButton) {
-            if (((JButton) e.getSource()).getText().equals("Close")) {
+            /*if (((JButton) e.getSource()).getText().equals("Close")) {
+                // close task
                 getDescription().setClosedLook();
             }
             else if (((JButton) e.getSource()).getText().equals("Reopen")) {
+                // reopen task
                 getDescription().setBeforeClosedLook();
             }
             else if (((JButton) e.getSource()).getText().equals("Delete")) {
@@ -113,6 +130,20 @@ public class ProjectTask extends Task implements ActionListener {
                     projectManager.getSelectedProject().getTaskManager().deleteProjectTask(this);
                 }
             }
+            else if (((JButton) e.getSource()).getText().equals("Edit Name")) {
+                // ask for new task name
+                String newTaskName = JOptionPane.showInputDialog(projectManager, "New Task Name");
+                if (DialogCreation.isInputLegal(newTaskName)) {
+                    // user input is legal project task name
+                    RenameTask(newTaskName);
+                }
+                else if (DialogCreation.isInputIllegal(newTaskName)) {
+                    // user input is empty or blank -> illegal name -> error message
+                    DialogCreation.createIllegalInputDialog(projectManager);
+                }
+            }*/
+
+            ToolbarButtonsManager.checkToolbarButtonsCall(e, this);
         }
     }
 }

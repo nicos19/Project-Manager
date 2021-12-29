@@ -15,8 +15,9 @@ class ToolbarButtonsManager {
      * Processes a button click on the toolbars, i. e. when the user clicked a
      * "Close", "Reopen", "Delete" or "Edit Name" button.
      * @param e the action event fired by a button that shall be processed
-     * @param toolbarOwner the object that the toolbar with the clicked button is part of
-     *                     (can be of types ProjectTask, SubTask, ClassPlan or Method)
+     * @param toolbarOwner the object that the toolbar with the clicked button is
+     *                     part of (can be of types ProjectTask, SubTask,
+     *                     ClassPlan, Fields or Method)
      */
     static void checkToolbarButtonsCall(ActionEvent e, Object toolbarOwner) {
         Description d;
@@ -34,6 +35,10 @@ class ToolbarButtonsManager {
             d = ((ClassPlan)toolbarOwner).getDescription();
             pm = ((ClassPlan)toolbarOwner).getProjectManager();
         }
+        else if (toolbarOwner instanceof Fields) {
+            d = ((Fields)toolbarOwner).getDescription();
+            pm = ((Fields)toolbarOwner).getParentClassPlan().getProjectManager();
+        }
         else if (toolbarOwner instanceof Method) {
             d = ((Method)toolbarOwner).getDescription();
             pm = ((Method)toolbarOwner).getParentClassPlan().getProjectManager();
@@ -44,17 +49,41 @@ class ToolbarButtonsManager {
         }
 
         if (((JButton) e.getSource()).getText().equals("Close")) {
-            // close task
+            // close toolbarOwner
             d.setClosedLook();
+            // for project tasks and class plans: mark tab with checkmark
+            if (toolbarOwner instanceof ProjectTask) {
+                TaskManager tm = pm.getSelectedProject().getTaskManager();
+                tm.getBasePane().setIconAt(tm.getBasePane().getSelectedIndex(),
+                        IconCreation.createGreenCheckmark());
+            }
+            else if (toolbarOwner instanceof ClassPlan) {
+                ClassManager cm = pm.getSelectedProject().getClassManager();
+                cm.getBasePane().setIconAt(cm.getBasePane().getSelectedIndex(),
+                        IconCreation.createGreenCheckmark());
+            }
         }
         else if (((JButton) e.getSource()).getText().equals("Reopen")) {
-            // reopen task
+            // reopen toolbarOwner
             d.setBeforeClosedLook();
+            // for project tasks and class plans: remove checkmark from tab
+            if (toolbarOwner instanceof ProjectTask) {
+                TaskManager tm = pm.getSelectedProject().getTaskManager();
+                tm.getBasePane().setIconAt(tm.getBasePane().getSelectedIndex(),
+                        null);
+            }
+            else if (toolbarOwner instanceof ClassPlan) {
+                ClassManager cm = pm.getSelectedProject().getClassManager();
+                cm.getBasePane().setIconAt(cm.getBasePane().getSelectedIndex(),
+                        null);
+            }
         }
         else if (((JButton) e.getSource()).getText().equals("Delete")) {
+            // delete toolbarOwner
             tryDelete(toolbarOwner, pm);
         }
         else if (((JButton) e.getSource()).getText().equals("Edit Name")) {
+            // edit toolbarOwner's name
             tryRename(toolbarOwner, pm);
         }
     }

@@ -16,9 +16,9 @@ class ClassPlan implements ActionListener {
     private String name;
     private boolean isOpen = false;
     private Description description;
-    private Description fields;
 
     private ProjectManager projectManager;
+    private Fields fields;
     private List<Method> methods = new ArrayList<>();
     private JButton newMethodButton = new JButton("Add new Method",
             IconCreation.createBluePlus());
@@ -44,14 +44,14 @@ class ClassPlan implements ActionListener {
         description.setClassPlanLook();
 
         // initialize class plan's fields description
-        fields = new Description("Fields", this);
-        fields.setClassFieldsLook();
+        fields = new Fields(this);
+        fields.getDescription().setClassFieldsLook();
 
         // initialize tabView
-        // (add class plans's description and fields description to tabView)
+        // (add class plans's description and fields' description to tabView)
         tabView.setClassManagerView();
         tabView.addDescription(description);
-        tabView.addDescription(fields);
+        tabView.addDescription(fields.getDescription());
 
         // initialize newMethodButton
         newMethodButton.addActionListener(this);
@@ -130,6 +130,9 @@ class ClassPlan implements ActionListener {
     void deleteMethod(Method method) {
         methods.remove(method);
         tabView.removeDescription(method.getDescription());
+
+        projectManager.revalidate();
+        projectManager.repaint();
     }
 
     @Override
@@ -147,7 +150,10 @@ class ClassPlan implements ActionListener {
                 // user input is illegal -> error message
                 DialogCreation.createIllegalInputDialog(classPlanPanel);
             }
-
+        }
+        else if (e.getSource() instanceof JButton) {
+            // check if user clicked any toolbar button of this class plan
+            ToolbarButtonsManager.checkToolbarButtonsCall(e, this);
         }
     }
 }

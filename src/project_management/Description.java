@@ -174,6 +174,7 @@ public class Description {
 
     void setClassFieldsLook() {
         // Description instance for class fields has no "delete" or "edit" button
+        closeButton.setText("Close");
         toolBar.remove(deleteButton);
         toolBar.remove(editNameButton);
 

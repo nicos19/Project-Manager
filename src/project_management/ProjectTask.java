@@ -92,6 +92,9 @@ public class ProjectTask extends Task implements ActionListener {
     void deleteSubTask(SubTask subTask) {
         subTasks.remove(subTask);
         tabView.removeDescription(subTask.getDescription());
+
+        projectManager.revalidate();
+        projectManager.repaint();
     }
 
 
@@ -111,38 +114,7 @@ public class ProjectTask extends Task implements ActionListener {
             }
         }
         else if (e.getSource() instanceof JButton) {
-            /*if (((JButton) e.getSource()).getText().equals("Close")) {
-                // close task
-                getDescription().setClosedLook();
-            }
-            else if (((JButton) e.getSource()).getText().equals("Reopen")) {
-                // reopen task
-                getDescription().setBeforeClosedLook();
-            }
-            else if (((JButton) e.getSource()).getText().equals("Delete")) {
-                // ask for delete confirmation
-                int delete = JOptionPane.showOptionDialog(projectManager,
-                        "Delete this Project Task (including all its Subtasks)?",
-                        "Please confirm", JOptionPane.OK_CANCEL_OPTION,
-                         JOptionPane.WARNING_MESSAGE, null, null, null);
-                if (delete == JOptionPane.OK_OPTION) {
-                    // delete project task (and all subtasks)
-                    projectManager.getSelectedProject().getTaskManager().deleteProjectTask(this);
-                }
-            }
-            else if (((JButton) e.getSource()).getText().equals("Edit Name")) {
-                // ask for new task name
-                String newTaskName = JOptionPane.showInputDialog(projectManager, "New Task Name");
-                if (DialogCreation.isInputLegal(newTaskName)) {
-                    // user input is legal project task name
-                    RenameTask(newTaskName);
-                }
-                else if (DialogCreation.isInputIllegal(newTaskName)) {
-                    // user input is empty or blank -> illegal name -> error message
-                    DialogCreation.createIllegalInputDialog(projectManager);
-                }
-            }*/
-
+            // check if user clicked any toolbar button of this project task
             ToolbarButtonsManager.checkToolbarButtonsCall(e, this);
         }
     }

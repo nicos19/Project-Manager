@@ -65,7 +65,7 @@ class TaskManager {
         ProjectTask newTask = new ProjectTask(projectTaskName, projectManager);
         tasks.add(newTask);
         basePane.add(projectTaskName, newTask.getProjectTaskPanel());
-        basePane.setForegroundAt(tasks.size() - 1, new Color(0, 0, 153));
+        basePane.setForegroundAt(tasks.size() - 1, new Color(20, 40, 200));
         selectTask(tasks.size() - 1);
     }
 

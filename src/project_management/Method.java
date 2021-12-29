@@ -1,5 +1,6 @@
 package project_management;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -56,6 +57,9 @@ class Method implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() instanceof JButton) {
+            // check if user clicked any toolbar button of this method
+            ToolbarButtonsManager.checkToolbarButtonsCall(e, this);
+        }
     }
 }

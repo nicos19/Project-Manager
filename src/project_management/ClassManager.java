@@ -61,7 +61,7 @@ class ClassManager {
         ClassPlan newClassPlan = new ClassPlan(classPlanName, projectManager);
         classPlans.add(newClassPlan);
         basePane.add(classPlanName, newClassPlan.getClassPlanPanel());
-        basePane.setForegroundAt(classPlans.size() - 1, new Color(0, 0, 153));
+        basePane.setForegroundAt(classPlans.size() - 1, new Color(84, 0, 168));
         selectClassPlan(classPlans.size() - 1);
     }
 

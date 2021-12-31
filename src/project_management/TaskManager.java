@@ -56,7 +56,7 @@ class TaskManager {
      */
     void addNewProjectTask(String projectTaskName, ProjectManager projectManager) {
         if (hasTask(projectTaskName)) {
-            // task with this name already exists -> error message
+            // project task with this name already exists -> error message
             DialogCreation.createNameAlreadyExistsDialog(projectManager, "Project Task");
             return;
         }
@@ -88,6 +88,25 @@ class TaskManager {
                 selectTask(indexOfDeletedTask);
             }
         }
+    }
+
+    /**
+     * Renames the given project task.
+     * @param projectTask the project task to be renamed
+     * @param newProjectTaskName the new name for projectTask
+     * @param projectManager the project manager responsible for this task manager
+     */
+    void renameProjectTask(ProjectTask projectTask, String newProjectTaskName,
+                           ProjectManager projectManager) {
+        if (hasTask(newProjectTaskName)) {
+            // project task with this name already exists -> error message
+            DialogCreation.createNameAlreadyExistsDialog(projectManager, "Project Task");
+            return;
+        }
+
+        projectTask.rename(newProjectTaskName);
+        // update tab title of projectTask's tab
+        updateTabTitleOfSelectedTab(newProjectTaskName);
     }
 
     /**

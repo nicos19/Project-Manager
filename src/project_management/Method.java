@@ -50,6 +50,10 @@ class Method implements ActionListener {
         return parentClassPlan;
     }
 
+    /**
+     * Renames the method.
+     * @param newName the new method name
+     */
     void rename(String newName) {
         name = newName;
         description.setNewTitle(newName);

@@ -64,7 +64,7 @@ public class ProjectTask extends Task implements ActionListener {
     }
 
     /**
-     * Adds a new sub-task to this project task.
+     * Adds a new subtask to this project task.
      * @param subTaskName the name of the new sub-task
      */
     private void addNewSubTask(String subTaskName) {
@@ -95,6 +95,21 @@ public class ProjectTask extends Task implements ActionListener {
 
         projectManager.revalidate();
         projectManager.repaint();
+    }
+
+    /**
+     * Renames the given subtask.
+     * @param subTask the subtask to be renamed
+     * @param newSubTaskName the new name for subTask
+     */
+    void renameSubTask(SubTask subTask, String newSubTaskName) {
+        if (TaskManager.hasTask(newSubTaskName, subTasks)) {
+            // subtask with this name already exists -> error message
+            DialogCreation.createNameAlreadyExistsDialog(projectManager, "Subtask");
+            return;
+        }
+
+        subTask.rename(newSubTaskName);
     }
 
 

@@ -156,18 +156,23 @@ class ToolbarButtonsManager {
         if (DialogCreation.isInputLegal(newName)) {
             // user input is legal name -> rename
             if (objectToBeRenamed instanceof ProjectTask) {
-                ((ProjectTask)objectToBeRenamed).rename(newName);
-                pm.getSelectedProject().getTaskManager().updateTabTitleOfSelectedTab(newName);
+                ((ProjectTask)objectToBeRenamed).getProjectManager().
+                        getSelectedProject().getTaskManager().renameProjectTask(
+                                (ProjectTask)objectToBeRenamed, newName, pm);
+
             }
             else if (objectToBeRenamed instanceof SubTask) {
-                ((SubTask)objectToBeRenamed).rename(newName);
+                ((SubTask)objectToBeRenamed).getParentTask().renameSubTask(
+                        (SubTask)objectToBeRenamed, newName);
             }
             else if (objectToBeRenamed instanceof ClassPlan) {
-                ((ClassPlan)objectToBeRenamed).rename(newName);
-                pm.getSelectedProject().getClassManager().updateTabTitleOfSelectedTab(newName);
+                ((ClassPlan)objectToBeRenamed).getProjectManager().
+                        getSelectedProject().getClassManager().renameClassPlan(
+                                (ClassPlan)objectToBeRenamed, newName, pm);
             }
             else if (objectToBeRenamed instanceof Method) {
-                ((Method)objectToBeRenamed).rename(newName);
+                ((Method)objectToBeRenamed).getParentClassPlan().renameMethod(
+                        (Method)objectToBeRenamed, newName);
             }
             else {
                 throw new IllegalArgumentException(objectToBeRenamed.toString()

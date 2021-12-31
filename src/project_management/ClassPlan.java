@@ -21,7 +21,7 @@ class ClassPlan implements ActionListener {
     private Fields fields;
     private List<Method> methods = new ArrayList<>();
     private JButton newMethodButton = new JButton("Add new Method",
-            IconCreation.createBluePlus());
+            IconCreation.createPurplePlus());
 
     // tabView.basePane contains class plan's visual representation and the
     // representation of all its fields and methods
@@ -55,8 +55,8 @@ class ClassPlan implements ActionListener {
 
         // initialize newMethodButton
         newMethodButton.addActionListener(this);
-        newMethodButton.setBackground(new Color(0, 0, 153));
-        newMethodButton.setForeground(new Color(0, 0, 153));
+        newMethodButton.setBackground(new Color(84, 0, 168));
+        newMethodButton.setForeground(new Color(84, 0, 168));
     }
 
     /**
@@ -133,6 +133,21 @@ class ClassPlan implements ActionListener {
 
         projectManager.revalidate();
         projectManager.repaint();
+    }
+
+    /**
+     * Rename the given method.
+     * @param method the method to be renamed
+     * @param newMethodName the new name for method
+     */
+    void renameMethod(Method method, String newMethodName) {
+        if (ClassManager.hasMethod(newMethodName, methods)) {
+            // method with this name already exists -> error message
+            DialogCreation.createNameAlreadyExistsDialog(projectManager, "Method");
+            return;
+        }
+
+        method.rename(newMethodName);
     }
 
     @Override

@@ -87,6 +87,25 @@ class ClassManager {
     }
 
     /**
+     * Renames the given the class plan.
+     * @param classPlan the class plan to be renamed
+     * @param newClassPlanName the new name for classPlan
+     * @param projectManager the project manager responsible for this class manager
+     */
+    void renameClassPlan(ClassPlan classPlan, String newClassPlanName,
+                         ProjectManager projectManager) {
+        if (hasClassPlan(newClassPlanName)) {
+            // class plan with this name already exists -> error message
+            DialogCreation.createNameAlreadyExistsDialog(projectManager, "Class Plan");
+            return;
+        }
+
+        classPlan.rename(newClassPlanName);
+        // update tab title of classPlan's tab
+        updateTabTitleOfSelectedTab(newClassPlanName);
+    }
+
+    /**
      * Checks whether class plan list contains a class plan with given name.
      * @param name the possible class plan name
      * @return true if class plan list has a plan called "name", false otherwise

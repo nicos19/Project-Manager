@@ -32,6 +32,17 @@ public class IconCreation {
     }
 
     /**
+     * Creates a purple plus icon.
+     * @return the icon
+     */
+    static Icon createPurplePlus() {
+        IconCreation iconCreator = new IconCreation();
+
+        return ResourceLoader.createImageIcon(iconCreator.getClass(),
+                "/resources/plus-icon-small-16-purple.png");
+    }
+
+    /**
      * Creates a green checkmark icon.
      * @return the icon
      */

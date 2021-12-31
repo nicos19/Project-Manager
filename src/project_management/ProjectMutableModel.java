@@ -7,32 +7,33 @@ import java.util.List;
 
 /**
  * Created by Nico Sonner on 09.12.2021.
+ *
  * This is a implementation of a MutableComboBoxModel for the projectsComboBox field
  * of a ProjectManager instance.
  */
 public class ProjectMutableModel implements MutableComboBoxModel {
-    private List<Object> projects = new ArrayList<>();
+    private List<String> projects = new ArrayList<>();
     private int index = -1;  // index of selected item
 
 
     @Override
     public void addElement(Object item) {
-        if (!projects.contains(item)) {
-            projects.add(item);
+        if (!projects.contains((String)item)) {
+            projects.add((String)item);
         }
     }
 
     @Override
     public void removeElement(Object obj) {
-        if (projects.contains(obj)) {
-            projects.remove(obj);
+        if (projects.contains((String)obj)) {
+            projects.remove((String)obj);
         }
     }
 
     @Override
     public void insertElementAt(Object item, int index) {
-        if (!projects.contains(item)) {
-            projects.add(index, item);
+        if (!projects.contains((String)item)) {
+            projects.add(index, (String)item);
         }
     }
 
@@ -46,9 +47,8 @@ public class ProjectMutableModel implements MutableComboBoxModel {
     @Override
     public void setSelectedItem(Object anItem) {
         for (int i = 0; i < projects.size(); i++) {
-            if (((Project)projects.get(i)).getName() == anItem) {
+            if ((projects.get(i)).equals((String)anItem)) {
                 index = i;
-                System.out.println(index);
                 break;
             }
         }
@@ -61,7 +61,7 @@ public class ProjectMutableModel implements MutableComboBoxModel {
             return "";
         }
         else {
-            return ((Project)projects.get(index)).getName();
+            return projects.get(index);
         }
     }
 
@@ -73,12 +73,10 @@ public class ProjectMutableModel implements MutableComboBoxModel {
     @Override
     public Object getElementAt(int index) {
         if (projects.size() > index) {
-            System.out.println(((Project)projects.get(index)).getName());
-            return ((Project)projects.get(index)).getName();
+            return projects.get(index);
         }
         else {
             // no element at index
-            System.out.println("-");
             return "";
         }
     }

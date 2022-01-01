@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 
 /**
  * Created by Nico Sonner on 11.12.2021.
+ *
+ * A subtask describes a part of a project task. A SubTask instance has always a
+ * ProjectTask instance assigned to.
  */
 public class SubTask extends Task implements ActionListener{
     private ProjectTask parentTask;
@@ -26,6 +29,7 @@ public class SubTask extends Task implements ActionListener{
     ProjectTask getParentTask() {
         return parentTask;
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {

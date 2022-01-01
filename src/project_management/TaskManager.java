@@ -33,7 +33,7 @@ class TaskManager {
      * Updates the title of currently selected tab.
      * @param newTitle the new title
      */
-    void updateTabTitleOfSelectedTab(String newTitle) {
+    private void updateTabTitleOfSelectedTab(String newTitle) {
         basePane.setTitleAt(basePane.getSelectedIndex(), newTitle);
     }
 

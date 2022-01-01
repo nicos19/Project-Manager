@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 /**
  * Created by Nico Sonner on 28.12.2021.
  *
- * A class with methods to process buttons clicks on toolbars, i. e. clicks on
+ * A class with methods to process button clicks on toolbars, i. e. clicks on
  * "Close", "Reopen", "Delete" or "Edit Name" buttons.
  */
 class ToolbarButtonsManager {

@@ -14,6 +14,8 @@ import java.awt.event.MouseListener;
 
 /**
  * Created by Nico Sonner on 11.12.2021.
+ *
+ * A class from which both ProjectTask and SubTask inherit their joint traits.
  */
 public class Task implements ActionListener{
     private String name;

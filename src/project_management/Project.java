@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Created by Nico Sonner on 09.12.2021.
+ *
  * A Project Instance represents one project the user wants to manage with the project
  * manager.
  */
@@ -12,11 +13,9 @@ public class Project {
     private String name;
     private TaskManager taskManager = new TaskManager();
     private ClassManager classManager = new ClassManager();
-    //private List<ProjectTask> tasks = new ArrayList<>();
-    //private List<ClassPlan> classes;
-    //private int indexOfSelectedTask = -1;
 
-    public Project(String projectName) {
+
+    Project(String projectName) {
         name = projectName;
     }
 
@@ -32,7 +31,7 @@ public class Project {
      * Returns the TaskManager associated with this project.
      * @return the taskManager
      */
-    public TaskManager getTaskManager() {
+    TaskManager getTaskManager() {
         return taskManager;
     }
 
@@ -40,7 +39,7 @@ public class Project {
      * Returns the ClassManager associated with this project.
      * @return the classManager
      */
-    public ClassManager getClassManager() {
+    ClassManager getClassManager() {
         return classManager;
     }
 

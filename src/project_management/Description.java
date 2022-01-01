@@ -6,8 +6,11 @@ import java.awt.event.ActionListener;
 
 /**
  * Created by Nico Sonner on 23.12.2021.
+ *
+ * A Description instance holds the information for the proper visual representation of
+ * a ProjectTask, SubTask, ClassPlan, Method or Fields instance.
  */
-public class Description {
+class Description {
     private String title;
     private boolean isOpen = true;
 
@@ -75,10 +78,18 @@ public class Description {
     }
 
 
+    /**
+     * Gets the basePanel.
+     * @return the basePanel
+     */
     JPanel getBasePanel() {
         return basePanel;
     }
 
+    /**
+     * Assigns a new title for this description.
+     * @param newTitle the new title
+     */
     void setNewTitle(String newTitle) {
         title = newTitle;
         if (isOpen) {
@@ -89,20 +100,36 @@ public class Description {
         }
     }
 
+    /**
+     * Sets the colors for closeButton (green), deleteButton (red)
+     * and editNameButton (blue).
+     */
     private void setButtonColors() {
         closeButton.setBackground(new Color(153, 220, 153));
         deleteButton.setBackground(new Color(255, 153, 153));
         editNameButton.setBackground(new Color(220, 240, 255));
     }
 
+    /**
+     * Sets the number of rows the text area in textPane of this description shall have.
+     * @param rows the number of rows for the text area
+     */
     private void setTextAreaRows(int rows) {
         ((JTextArea)textPane.getViewport().getView()).setRows(rows);
     }
 
+    /**
+     * Sets the font size of titleLabel.
+     * @param fontSize the new font size
+     */
     private void setHeadlineFontSize(int fontSize) {
         titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.BOLD, fontSize));
     }
 
+    /**
+     * Sets the visual appearance of this description so that it is clear
+     * that it is a description for a project task.
+     */
     void setProjectTaskLook() {
         // set headline font size
         setHeadlineFontSize(18);
@@ -118,12 +145,17 @@ public class Description {
         // coloring: titlePanel
         titlePanel.setBackground(new Color(190, 220, 255));
         // coloring: textArea in textPane
-        ((JTextArea)textPane.getViewport().getView()).setBackground(new Color(220, 240, 255));
+        ((JTextArea)textPane.getViewport().getView()).setBackground(
+                new Color(220, 240, 255));
 
         basePanel.setPreferredSize(new Dimension(300, 145));
         basePanel.setMaximumSize(new Dimension(1000000, 145));
     }
 
+    /**
+     * Sets the visual appearance of this description so that it is clear
+     * that it is a description for a subtask.
+     */
     void setSubTaskLook() {
         // set border around basePanel
         basePanel.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(3),
@@ -144,12 +176,17 @@ public class Description {
         // coloring: titlePanel
         titlePanel.setBackground(new Color(51, 153, 255));
         // coloring: textArea in textPane
-        ((JTextArea)textPane.getViewport().getView()).setBackground(new Color(153, 204, 255));
+        ((JTextArea)textPane.getViewport().getView()).setBackground(
+                new Color(153, 204, 255));
 
         basePanel.setPreferredSize(new Dimension(300, 110));
         basePanel.setMaximumSize(new Dimension(1000000, 110));
     }
 
+    /**
+     * Sets the visual appearance of this description so that it is clear
+     * that it is a description for a class plan.
+     */
     void setClassPlanLook() {
         // set headline font size  and color
         setHeadlineFontSize(18);
@@ -166,12 +203,17 @@ public class Description {
         // coloring: titlePanel
         titlePanel.setBackground(new Color(136, 17, 255));
         // coloring: textArea in textPane
-        ((JTextArea)textPane.getViewport().getView()).setBackground(new Color(220, 187, 255));
+        ((JTextArea)textPane.getViewport().getView()).setBackground(
+                new Color(220, 187, 255));
 
         basePanel.setPreferredSize(new Dimension(300, 145));
         basePanel.setMaximumSize(new Dimension(1000000, 145));
     }
 
+    /**
+     * Sets the visual appearance of this description so that it is clear
+     * that it is a description for a Fields instance.
+     */
     void setClassFieldsLook() {
         // Description instance for class fields has no "delete" or "edit" button
         closeButton.setText("Close");
@@ -196,12 +238,17 @@ public class Description {
         // coloring: titlePanel
         titlePanel.setBackground(new Color(255, 255, 155));
         // coloring: textArea in textPane
-        ((JTextArea)textPane.getViewport().getView()).setBackground(new Color(255, 255, 204));
+        ((JTextArea)textPane.getViewport().getView()).setBackground(
+                new Color(255, 255, 204));
 
         basePanel.setPreferredSize(new Dimension(300, 146));
         basePanel.setMaximumSize(new Dimension(1000000, 146));
     }
 
+    /**
+     * Sets the visual appearance of this description so that it is clear
+     * that it is a description for a method.
+     */
     void setClassMethodLook() {
         // set border around basePanel
         basePanel.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(3),
@@ -221,12 +268,17 @@ public class Description {
         // coloring: titlePanel
         titlePanel.setBackground(new Color(255, 211, 60));
         // coloring: textArea in textPane
-        ((JTextArea)textPane.getViewport().getView()).setBackground(new Color(255, 233, 157));
+        ((JTextArea)textPane.getViewport().getView()).setBackground(
+                new Color(255, 233, 157));
 
         basePanel.setPreferredSize(new Dimension(300, 110));
         basePanel.setMaximumSize(new Dimension(1000000, 110));
     }
 
+    /**
+     * Sets the visual appearance of this description so that it is clear that
+     * the task/class plan/etc. associated with the description was closed.
+     */
     void setClosedLook() {
         isOpen = false;
 
@@ -252,6 +304,10 @@ public class Description {
                 new Color(170, 255, 170));
     }
 
+    /**
+     * Sets the visual appearance of this description so that it is clear that
+     * the task/class plan/etc. associated with the description is not closed.
+     */
     void setBeforeClosedLook() {
         isOpen = true;
 
@@ -268,6 +324,5 @@ public class Description {
         titlePanel.setBackground(oldColors[1]);
         ((JTextArea)textPane.getViewport().getView()).setBackground(oldColors[2]);
     }
-
 
 }

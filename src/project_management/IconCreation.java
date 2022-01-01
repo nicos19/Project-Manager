@@ -7,7 +7,7 @@ import javax.swing.*;
  *
  * Class used to create/load icons.
  */
-public class IconCreation {
+class IconCreation {
 
     /**
      * Creates a green plus icon.

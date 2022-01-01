@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Created by Nico Sonner on 09.12.2021.
+ *
  * A ClassManager instance manages the class manager view in the project manager.
  */
 class ClassManager {
@@ -29,7 +30,7 @@ class ClassManager {
      * Updates the title of currently selected tab.
      * @param newTitle the new title
      */
-    void updateTabTitleOfSelectedTab(String newTitle) {
+    private void updateTabTitleOfSelectedTab(String newTitle) {
         basePane.setTitleAt(basePane.getSelectedIndex(), newTitle);
     }
 

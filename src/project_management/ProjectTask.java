@@ -10,6 +10,10 @@ import java.util.List;
 
 /**
  * Created by Nico Sonner on 11.12.2021.
+ *
+ * A project task represents a part of a project (e. g. a specific feature) the user
+ * wants to create.
+ * A project task can have numerous subtasks (instances of SubTask).
  */
 public class ProjectTask extends Task implements ActionListener {
     private ProjectManager projectManager;

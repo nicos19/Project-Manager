@@ -69,8 +69,6 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
         newTaskButton.addActionListener(this);
         newClassPlanButton.addActionListener(this);
 
-        //projectsComboBox.setModel(new ProjectMutableModel());
-
         // set button colors
         newProjectButton.setForeground(new Color(0, 153, 0));
         newProjectButton.setBackground(new Color(0, 153, 0));
@@ -224,6 +222,35 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
         repaint();
     }
 
+    /**
+     * Checks whether projects list contains a project with given name.
+     * @param name the possible project name
+     * @return true if project list has a project called "name", false otherwise
+     */
+    private boolean hasProject(String name) {
+        for (Project p : projects) {
+            if (p.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if given string consists of blank chars only.
+     * @param s the string to check
+     * @return true if s is blank, false otherwise
+     */
+    static boolean isBlank(String s) {
+        for(int i = 0; i < s.length(); i++) {
+            if (!Character.isWhitespace(s.charAt(i))) {
+                // non-blank char found
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     /**
      * Manages occurring ItemEvents.
@@ -327,35 +354,6 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
         }
     }
 
-    /**
-     * Checks whether projects list contains a project with given name.
-     * @param name the possible project name
-     * @return true if project list has a project called "name", false otherwise
-     */
-    private boolean hasProject(String name) {
-        for (Project p : projects) {
-            if (p.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks if given string consists of blank chars only.
-     * @param s the string to check
-     * @return true if s is blank, false otherwise
-     */
-    static boolean isBlank(String s) {
-        for(int i = 0; i < s.length(); i++) {
-            if (!Character.isWhitespace(s.charAt(i))) {
-                // non-blank char found
-                return false;
-            }
-        }
-        return true;
-    }
-
 
     public static void main(String[] args) {
         // set Look & Feel
@@ -371,8 +369,8 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
         pm.setSize(600, 800);
         pm.setVisible(true);
 
-        pm.addNewProject("First Project");
-        pm.addNewProject("Second Project");
-
+        //pm.addNewProject("First Project");
+        //pm.addNewProject("Second Project");
     }
+
 }

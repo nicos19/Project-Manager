@@ -10,6 +10,7 @@ import java.util.List;
  *
  * This is a implementation of a MutableComboBoxModel for the projectsComboBox field
  * of a ProjectManager instance.
+ * => NOT USED
  */
 public class ProjectMutableModel implements MutableComboBoxModel {
     private List<String> projects = new ArrayList<>();

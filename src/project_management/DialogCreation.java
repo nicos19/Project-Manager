@@ -8,7 +8,7 @@ import java.awt.*;
  *
  * A class used to create option dialogs and to further process inputs from dialogs.
  */
-public class DialogCreation {
+class DialogCreation {
 
     /**
      * Creates an error message dialog telling that the user's input is illegal.

@@ -93,6 +93,22 @@ class ClassPlan implements ActionListener {
     }
 
     /**
+     * Gets the fields of this class plan.
+     * @return the fields
+     */
+    Fields getFields() {
+        return fields;
+    }
+
+    /**
+     * Gets the methods of this class plan.
+     * @return the methods
+     */
+    List<Method> getMethods() {
+        return methods;
+    }
+
+    /**
      * Rename this class plan.
      * @param newName the new name
      */

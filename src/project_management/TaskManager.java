@@ -21,12 +21,20 @@ class TaskManager {
     TaskManager() {    }
 
     /**
-     * Returns the JTabbedPane that contains all relevant containers for the task
+     * Gets the JTabbedPane that contains all relevant containers for the task
      * manager view.
      * @return the basePane
      */
     JTabbedPane getBasePane() {
         return basePane;
+    }
+
+    /**
+     * Gets the list of all project tasks.
+     * @return the tasks
+     */
+    List<ProjectTask> getTasks() {
+        return tasks;
     }
 
     /**

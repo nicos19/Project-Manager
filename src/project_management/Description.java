@@ -87,6 +87,15 @@ class Description {
     }
 
     /**
+     * Checks whether the task/class plan/etc. associated with this description
+     * is open or closed.
+     * @return true if field isOpen == true, false otherwise
+     */
+    boolean isOpen() {
+        return isOpen;
+    }
+
+    /**
      * Assigns a new title for this description.
      * @param newTitle the new title
      */
@@ -98,6 +107,14 @@ class Description {
         else {
             titleLabel.setText(title + " - CLOSED");
         }
+    }
+
+    /**
+     * Gets the content in the text area in textPane.
+     * @return the text area content in textPane
+     */
+    String getTextAreaContent() {
+        return ((TextArea)textPane.getViewport().getView()).getText();
     }
 
     /**

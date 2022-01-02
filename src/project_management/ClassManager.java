@@ -27,6 +27,14 @@ class ClassManager {
     }
 
     /**
+     * Gets the list of all class plans.
+     * @return the classPlans
+     */
+    List<ClassPlan> getClassPlans() {
+        return classPlans;
+    }
+
+    /**
      * Updates the title of currently selected tab.
      * @param newTitle the new title
      */

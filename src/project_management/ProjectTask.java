@@ -68,6 +68,14 @@ public class ProjectTask extends Task implements ActionListener {
     }
 
     /**
+     * Gets the list of all subtasks of this project task.
+     * @return the subTasks
+     */
+    List<SubTask> getSubTasks() {
+        return subTasks;
+    }
+
+    /**
      * Adds a new subtask to this project task.
      * @param subTaskName the name of the new sub-task
      */

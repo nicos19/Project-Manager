@@ -118,6 +118,14 @@ class Description {
     }
 
     /**
+     * Sets the content in the text area in textPane.
+     * @param newTextAreaContent the new text for the text area
+     */
+    void setTextAreaContent(String newTextAreaContent) {
+        ((TextArea)textPane.getViewport().getView()).setText(newTextAreaContent);
+    }
+
+    /**
      * Sets the colors for closeButton (green), deleteButton (red)
      * and editNameButton (blue).
      */

@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +89,19 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
         navigationBarPanel.add(classManagerButton);
     }
 
+    void saveProjects() {
+
+    }
+
+    void restoreSavedProjects(List<SavedProject> savedProjects) {
+        for (SavedProject savedProject : savedProjects) {
+            Project restoredProject = savedProject.getProject();
+
+        }
+    }
+
+
+
 
     /**
      * Selects the project with given name in projects and in projectsComboBox.
@@ -135,6 +150,25 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
         drawTaskOrClassPane();
         revalidate();
         repaint();
+    }
+
+    void addRestoredProject(Project restoredProject) {
+        // add restored project itself
+        projects.add(restoredProject);
+        projectsComboBox.addItem(restoredProject);
+        selectProject(restoredProject.getName());
+
+        // for all restored project tasks of restoredProject:
+        // restore the panes and panels visualizing them
+        for (ProjectTask pt : restoredProject.getTaskManager().getTasks()) {
+            getSelectedProject().getTaskManager().restoreProjectTaskVisuals(pt, this);
+        }
+
+        // for all restored class plans of restoredProject:
+        // restore the panes and panels visualizing them
+        for (ClassPlan cp : restoredProject.getClassManager().getClassPlans()) {
+            getSelectedProject().getClassManager().restoreClassPlanVisuals(cp, this);
+        }
     }
 
     /**
@@ -371,6 +405,22 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
 
         //pm.addNewProject("First Project");
         //pm.addNewProject("Second Project");
+
+        /*File f = new File("saved_projects" + File.separator + "test2.txt");
+        //File f = new File("test1.txt");
+        try {
+            f.createNewFile();
+        }
+        catch (IOException e) {
+            System.err.println(e);
+        }*/
+
+        /*File dir = new File("saved_projects");
+        String[] pathnames = dir.list();
+        for (String p : pathnames) {
+            System.out.println(p);
+        }*/
+
     }
 
 }

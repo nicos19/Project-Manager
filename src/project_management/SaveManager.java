@@ -21,10 +21,38 @@ public class SaveManager {
         }
     }
 
-    static List<Project> loadProjects() {
-        List<Project> loadedProjects = new ArrayList<>();
+    /**
+     * Loads all saved projects which were saved previously.
+     * @return the list of loaded SavedProject instances.
+     * If no saved projects are loaded, the list is empty.
+     */
+    static List<SavedProject> loadProjects() {
+        List<SavedProject> loadedSavedProjects = new ArrayList<>();
 
+        // get names of files of saved projects
+        File savedProjectsDirectory = new File("saved_projects");
+        String[] savedProjectsPathnames = savedProjectsDirectory.list();
 
+        // case: getting filenames of saved projects failed
+        if (savedProjectsPathnames == null) {
+            System.err.println("Error: savedProjectsDirectory.list() returned null.");
+            return loadedSavedProjects;
+        }
+
+        // deserialize files of saved projects
+        for (String filename : savedProjectsPathnames) {
+            SavedProject loadedSavedProject = loadProject(filename);
+            if (loadedSavedProject == null) {
+                // loading of project saved in filename failed
+                System.err.println("Error: Loading project " + filename + " failed.");
+                return loadedSavedProjects;
+            }
+            else {
+                loadedSavedProjects.add(loadedSavedProject);
+            }
+        }
+
+        return loadedSavedProjects;
     }
 
     /**
@@ -33,11 +61,12 @@ public class SaveManager {
      */
     private static void saveProject(Project project) {
         // create file for project
-        File file = new File("project_" + project.getName() + ".save");
+        File file = new File("saved_projects" + File.separator
+                + "project__" + project.getName() + ".save");
         try {
             file.createNewFile();
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.err.println("An error occurred.");
             e.printStackTrace();
         }
 
@@ -54,9 +83,33 @@ public class SaveManager {
             objectOutputStream.close();
         }
         catch (Exception e) {
-            System.out.println("An error occurred.");
+            System.err.println("An error occurred while serializing a savedProject.");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Loads a project by deserializing the content of the given file.
+     * @param filename the file to be deserialized
+     * @return the previously saved project (instance of SavedProject) created out of
+     * the deserialization, null if deserialization failed
+     */
+    private static SavedProject loadProject(String filename) {
+        SavedProject loadedSavedProject = null;
+
+        // deserialize content of filename
+        try {
+            FileInputStream fileInputStream = new FileInputStream(filename);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            loadedSavedProject = (SavedProject) objectInputStream.readObject();
+            objectInputStream.close();
+        }
+        catch (Exception e) {
+            System.err.println("An error occurred while deserializing file content.");
+            e.printStackTrace();
+        }
+
+        return loadedSavedProject;
     }
 
 }

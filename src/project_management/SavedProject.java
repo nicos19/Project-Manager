@@ -9,13 +9,13 @@ import java.util.List;
  *
  * A SavedProject instances can be serialized to save the status of project.
  */
-public class SavedProject implements Serializable {
+class SavedProject implements Serializable {
     private static final long serialVersionUID = 1L;
     private String name;
-    private List<SavedProjectPart> projectTasks = new ArrayList<>();
-    private List<SavedProjectPart> classPlans = new ArrayList<>();
+    private List<SavedProjectPart> savedProjectTasks = new ArrayList<>();
+    private List<SavedProjectPart> savedClassPlans = new ArrayList<>();
 
-    public SavedProject(Project project) {
+    SavedProject(Project project) {
         name = project.getName();
 
         // save project tasks of project
@@ -39,7 +39,7 @@ public class SavedProject implements Serializable {
                         new ArrayList<SavedProjectPart>()));
             }
 
-            projectTasks.add(new SavedProjectPart(pt.getName(), pt.getDescription(),
+            savedProjectTasks.add(new SavedProjectPart(pt.getName(), pt.getDescription(),
                     savedSubTasks));
         }
     }
@@ -64,9 +64,33 @@ public class SavedProject implements Serializable {
                         new ArrayList<SavedProjectPart>()));
             }
 
-            classPlans.add(new SavedProjectPart(cp.getName(), cp.getDescription(),
+            savedClassPlans.add(new SavedProjectPart(cp.getName(), cp.getDescription(),
                     savedFieldsAndMethods));
         }
+    }
+
+    /**
+     * Restores the project that was saved with this SavedProject instance.
+     * @return the restored project
+     */
+    Project restoreProject(ProjectManager projectManager) {
+        Project restoredProject = new Project(name);
+
+        // restore all project tasks
+        for (SavedProjectPart savedProjectTask : savedProjectTasks) {
+            ProjectTask restoredProjectTask = savedProjectTask.restoreAsProjectTask(
+                    projectManager);
+            restoredProject.getTaskManager().addRestoredProjectTask(restoredProjectTask);
+        }
+
+        // restore all class plans
+        for (SavedProjectPart savedClassPlan : savedClassPlans) {
+            ClassPlan restoredClassPlan = savedClassPlan.restoreAsClassPlan(
+                    projectManager);
+            restoredProject.getClassManager().addRestoredClassPlan(restoredClassPlan);
+        }
+
+        return restoredProject;
     }
 
 }

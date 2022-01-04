@@ -78,6 +78,17 @@ class TaskManager {
     }
 
     /**
+     * Adds the given restored project task to this task manager.
+     * @param restoredProjectTask the restored project task to be added
+     */
+    void addRestoredProjectTask(ProjectTask restoredProjectTask) {
+        tasks.add(restoredProjectTask);
+        basePane.add(restoredProjectTask.getName(), restoredProjectTask.getProjectTaskPanel());
+        basePane.setForegroundAt(tasks.size() - 1, new Color(20, 40, 200));
+        selectTask(tasks.size() - 1);
+    }
+
+    /**
      * Deletes the given project task.
      * @param projectTask the project task to be deleted
      */

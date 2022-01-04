@@ -49,10 +49,11 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
 
         initializeNavigationBar();
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setContentPane(mainPanel);
         pack();
     }
+
 
     /**
      * Initializes UI elements in the navigation bar at the top of
@@ -89,19 +90,29 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
         navigationBarPanel.add(classManagerButton);
     }
 
-    void saveProjects() {
-
+    /**
+     * Saves all projects of the project manager.
+     */
+    private void saveProjects() {
+        SaveManager.saveProjects(projects);
     }
 
-    void restoreSavedProjects(List<SavedProject> savedProjects) {
+    /**
+     * Restores previously saved projects so the user can continue with these.
+     */
+    private void restoreProjects() {
+        // restore all projects
+        List<SavedProject> savedProjects = SaveManager.loadSavedProjects();
         for (SavedProject savedProject : savedProjects) {
-            Project restoredProject = savedProject.getProject();
-
+            Project restoredProject = savedProject.restoreProject(this);
+            addRestoredProject(restoredProject);
         }
+
+        // show task manager view or class manager view
+        drawTaskOrClassPane();
+        revalidate();
+        repaint();
     }
-
-
-
 
     /**
      * Selects the project with given name in projects and in projectsComboBox.
@@ -152,23 +163,14 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
         repaint();
     }
 
-    void addRestoredProject(Project restoredProject) {
-        // add restored project itself
+    /**
+     * Adds the given restored project to this project manager.
+     * @param restoredProject the restored project to be added
+     */
+    private void addRestoredProject(Project restoredProject) {
         projects.add(restoredProject);
-        projectsComboBox.addItem(restoredProject);
+        projectsComboBox.addItem(restoredProject.getName());
         selectProject(restoredProject.getName());
-
-        // for all restored project tasks of restoredProject:
-        // restore the panes and panels visualizing them
-        for (ProjectTask pt : restoredProject.getTaskManager().getTasks()) {
-            getSelectedProject().getTaskManager().restoreProjectTaskVisuals(pt, this);
-        }
-
-        // for all restored class plans of restoredProject:
-        // restore the panes and panels visualizing them
-        for (ClassPlan cp : restoredProject.getClassManager().getClassPlans()) {
-            getSelectedProject().getClassManager().restoreClassPlanVisuals(cp, this);
-        }
     }
 
     /**
@@ -399,28 +401,27 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
             System.err.println("Error when trying to load System Look & Feel!");
         }
 
+        // start project manager
         ProjectManager pm = new ProjectManager(("Project Manager"));
         pm.setSize(600, 800);
         pm.setVisible(true);
 
-        //pm.addNewProject("First Project");
-        //pm.addNewProject("Second Project");
+        // try loading and restoring saved projects
+        System.out.println("Loading and Restoring projects...");
+        pm.restoreProjects();
+        System.out.println("Projects restored.");
 
-        /*File f = new File("saved_projects" + File.separator + "test2.txt");
-        //File f = new File("test1.txt");
-        try {
-            f.createNewFile();
-        }
-        catch (IOException e) {
-            System.err.println(e);
-        }*/
-
-        /*File dir = new File("saved_projects");
-        String[] pathnames = dir.list();
-        for (String p : pathnames) {
-            System.out.println(p);
-        }*/
-
+        // before application exit
+        Runtime.getRuntime().addShutdownHook(new Thread()
+        {
+            public void run()
+            {
+                // save projects
+                System.out.println("Saving...");
+                pm.saveProjects();
+                System.out.println("Projects saved.");
+            }
+        });
     }
 
 }

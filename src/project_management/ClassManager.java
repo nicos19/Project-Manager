@@ -75,6 +75,17 @@ class ClassManager {
     }
 
     /**
+     * Adds the given restored class plan to this class manager.
+     * @param restoredClassPlan the restored class plan to be added
+     */
+    void addRestoredClassPlan(ClassPlan restoredClassPlan) {
+        classPlans.add(restoredClassPlan);
+        basePane.add(restoredClassPlan.getName(), restoredClassPlan.getClassPlanPanel());
+        basePane.setForegroundAt(classPlans.size() - 1, new Color(20, 40, 200));
+        selectClassPlan(classPlans.size() - 1);
+    }
+
+    /**
      * Deletes the given class plan.
      * @param classPlan the class plan to be deleted
      */

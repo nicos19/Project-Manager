@@ -9,7 +9,7 @@ import java.util.List;
  *
  * A class to manage saving and loading of the projects in the project manager.
  */
-public class SaveManager {
+class SaveManager {
 
     /**
      * Saves the projects in the given list.
@@ -26,7 +26,7 @@ public class SaveManager {
      * @return the list of loaded SavedProject instances.
      * If no saved projects are loaded, the list is empty.
      */
-    static List<SavedProject> loadProjects() {
+    static List<SavedProject> loadSavedProjects() {
         List<SavedProject> loadedSavedProjects = new ArrayList<>();
 
         // get names of files of saved projects
@@ -99,7 +99,8 @@ public class SaveManager {
 
         // deserialize content of filename
         try {
-            FileInputStream fileInputStream = new FileInputStream(filename);
+            FileInputStream fileInputStream = new FileInputStream("saved_projects"
+                    + File.separator + filename);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             loadedSavedProject = (SavedProject) objectInputStream.readObject();
             objectInputStream.close();

@@ -101,6 +101,14 @@ class ClassPlan implements ActionListener {
     }
 
     /**
+     * Sets the content of the text area in fields' description.
+     * @param fieldsText the new text for fields' text area
+     */
+    void setFieldsText(String fieldsText) {
+        fields.getDescription().setTextAreaContent(fieldsText);
+    }
+
+    /**
      * Gets the methods of this class plan.
      * @return the methods
      */
@@ -137,6 +145,15 @@ class ClassPlan implements ActionListener {
 
         projectManager.revalidate();
         projectManager.repaint();
+    }
+
+    /**
+     * Adds the given restored method to this class plan.
+     * @param restoredMethod the restored method to be added
+     */
+    void addRestoredMethod(Method restoredMethod) {
+        methods.add(restoredMethod);
+        tabView.addDescription(restoredMethod.getDescription());
     }
 
     /**

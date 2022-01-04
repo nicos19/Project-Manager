@@ -114,7 +114,7 @@ class Description {
      * @return the text area content in textPane
      */
     String getTextAreaContent() {
-        return ((TextArea)textPane.getViewport().getView()).getText();
+        return ((JTextArea)textPane.getViewport().getView()).getText();
     }
 
     /**
@@ -122,7 +122,7 @@ class Description {
      * @param newTextAreaContent the new text for the text area
      */
     void setTextAreaContent(String newTextAreaContent) {
-        ((TextArea)textPane.getViewport().getView()).setText(newTextAreaContent);
+        ((JTextArea)textPane.getViewport().getView()).setText(newTextAreaContent);
     }
 
     /**

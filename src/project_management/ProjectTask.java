@@ -77,7 +77,7 @@ public class ProjectTask extends Task implements ActionListener {
 
     /**
      * Adds a new subtask to this project task.
-     * @param subTaskName the name of the new sub-task
+     * @param subTaskName the name of the new subtask
      */
     private void addNewSubTask(String subTaskName) {
         if (TaskManager.hasTask(subTaskName, subTasks)) {
@@ -95,6 +95,15 @@ public class ProjectTask extends Task implements ActionListener {
 
         projectManager.revalidate();
         projectManager.repaint();
+    }
+
+    /**
+     * Adds the given restored subtask to this project task.
+     * @param restoredSubTask the restored subtask to be added
+     */
+    void addRestoredSubTask(SubTask restoredSubTask) {
+        subTasks.add(restoredSubTask);
+        tabView.addDescription(restoredSubTask.getDescription());
     }
 
     /**

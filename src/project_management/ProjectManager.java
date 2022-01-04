@@ -177,10 +177,16 @@ public class ProjectManager extends JFrame implements ItemListener, ActionListen
      * Deletes the currently selected project.
      */
     private void deleteSelectedProject() {
+        // delete project on disc (if saved previously)
+        File file = new File("saved_projects" + File.separator
+                + "project__" + getSelectedProject().getName() + ".save");
+        file.delete();
+
+        // delete project in the project manager
         projects.remove(getSelectedProject());
         projectsComboBox.removeItem(projectsComboBox.getSelectedItem());
 
-        // if no project exists
+        // if no project exists after deletion
         if (projects.size() == 0) {
             // remember that no project is selected
             selectedProject = "";

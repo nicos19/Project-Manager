@@ -81,8 +81,14 @@ class ClassManager {
     void addRestoredClassPlan(ClassPlan restoredClassPlan) {
         classPlans.add(restoredClassPlan);
         basePane.add(restoredClassPlan.getName(), restoredClassPlan.getClassPlanPanel());
-        basePane.setForegroundAt(classPlans.size() - 1, new Color(20, 40, 200));
+        basePane.setForegroundAt(classPlans.size() - 1, new Color(84, 0, 168));
         selectClassPlan(classPlans.size() - 1);
+
+        if (!restoredClassPlan.getDescription().isOpen()) {
+            // restoredClassPlan is closed -> add checkmark at class plan's tab
+            basePane.setIconAt(basePane.getSelectedIndex(),
+                    IconCreation.createGreenCheckmark());
+        }
     }
 
     /**

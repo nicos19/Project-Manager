@@ -89,6 +89,10 @@ class SavedProjectPart implements Serializable {
         // set original fields
         SavedProjectPart savedFields = children.get(0);
         restoredClassPlan.setFieldsText(savedFields.textAreaContent);
+        if (!savedFields.isOpen) {
+            // fields must be closed
+            restoredClassPlan.getFields().getDescription().setClosedLook();
+        }
         children.remove(0);  // remove child representing fields
 
         // set original methods

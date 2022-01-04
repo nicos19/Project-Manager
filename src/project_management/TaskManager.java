@@ -83,9 +83,16 @@ class TaskManager {
      */
     void addRestoredProjectTask(ProjectTask restoredProjectTask) {
         tasks.add(restoredProjectTask);
-        basePane.add(restoredProjectTask.getName(), restoredProjectTask.getProjectTaskPanel());
+        basePane.add(restoredProjectTask.getName(),
+                restoredProjectTask.getProjectTaskPanel());
         basePane.setForegroundAt(tasks.size() - 1, new Color(20, 40, 200));
         selectTask(tasks.size() - 1);
+
+        if (!restoredProjectTask.getDescription().isOpen()) {
+            // restoredProjectTask is closed -> add checkmark at project task's tab
+            basePane.setIconAt(basePane.getSelectedIndex(),
+                    IconCreation.createGreenCheckmark());
+        }
     }
 
     /**

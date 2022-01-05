@@ -29,8 +29,13 @@ class SaveManager {
     static List<SavedProject> loadSavedProjects() {
         List<SavedProject> loadedSavedProjects = new ArrayList<>();
 
-        // get names of files of saved projects
         File savedProjectsDirectory = new File("saved_projects");
+        if (!savedProjectsDirectory.exists()) {
+            // saved_projects directory does not exists -> load nothing
+            return loadedSavedProjects;
+        }
+
+        // get names of files of saved projects
         String[] savedProjectsPathnames = savedProjectsDirectory.list();
 
         // case: getting filenames of saved projects failed
@@ -60,13 +65,17 @@ class SaveManager {
      * @param project the project to be saved
      */
     private static void saveProject(Project project) {
+        // create directory for saved projects files (if necessary)
+        File targetDirectory = new File("saved_projects");
+        targetDirectory.mkdir();
+
         // create file for project
         File file = new File("saved_projects" + File.separator
                 + "project__" + project.getName() + ".save");
         try {
             file.createNewFile();
         } catch (IOException e) {
-            System.err.println("An error occurred.");
+            System.err.println("An error occurred while saving a project.");
             e.printStackTrace();
         }
 
